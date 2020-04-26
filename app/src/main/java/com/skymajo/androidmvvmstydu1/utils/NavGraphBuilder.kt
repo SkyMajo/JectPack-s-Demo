@@ -1,44 +1,49 @@
 package com.skymajo.androidmvvmstydu1.utils
 
 import android.content.ComponentName
-import androidx.navigation.ActivityNavigator
-import androidx.navigation.NavController
-import androidx.navigation.Navigator
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.*
 import androidx.navigation.fragment.FragmentNavigator
 
 class NavGraphBuilder {
-    fun builder(navController: NavController){
+    fun builder(navController: NavController,activity:FragmentActivity,containerId:Int){
         var navigatorProvider = navController.navigatorProvider
-        var fragmentNavigator =
-            navigatorProvider.getNavigator<FragmentNavigator>(FragmentNavigator::class.java)
-
+        var fragmentNavigator = FixFragmentNavigation(activity,activity.supportFragmentManager,containerId)
+//            navigatorProvider.getNavigator<FragmentNavigator>(FragmentNavigator::class.java)
+        navigatorProvider.addNavigator(fragmentNavigator)
         var activityNavigator =
             navigatorProvider.getNavigator<ActivityNavigator>(ActivityNavigator::class.java)
 
-        var navGraph = navController.graph
+        var navGraph = NavGraph(NavGraphNavigator(navigatorProvider))
 
-        var sDestConfig = AppConfig.sDestConfig
+//        var navGraph = navController.graph
+
+        var sDestConfig = AppConfig.getDestinationConfig()
+
         for (value in sDestConfig.values) {
-            if (value.isFragment) {
+            var node = value
+            if (node.isFragment) {
                 var fragmentDestination = fragmentNavigator.createDestination()
-                fragmentDestination.id = value.id
-                fragmentDestination.addDeepLink(value.pageUrl)
-                fragmentDestination.className = value.clzName
-
+                fragmentDestination.id = node.id
+                fragmentDestination.addDeepLink(node.pageUrl)
+                fragmentDestination.className = node.clzName
+                if (node.asStarter){
+                    navGraph.startDestination = node.id
+                }
                 navGraph.addDestination(fragmentDestination)
             }else{
                 var activityDestination = activityNavigator.createDestination()
-                activityDestination.id = value.id
-                activityDestination.addDeepLink(value.pageUrl)
-                activityDestination.setComponentName(ComponentName(AppGlobals.getApplication()!!.packageName,value.clzName))
-
+                activityDestination.id = node.id
+                activityDestination.addDeepLink(node.pageUrl)
+                activityDestination.setComponentName(ComponentName(AppGlobals.getApplication()!!.packageName,node.clzName))
+                if (node.asStarter){
+                    navGraph.startDestination = node.id
+                }
                 navGraph.addDestination(activityDestination)
             }
 
-            if (value.asStarter){
-                navGraph.startDestination = value.id
-            }
+
         }
-            navController.setGraph(navGraph)
+        navController.graph = navGraph
     }
 }

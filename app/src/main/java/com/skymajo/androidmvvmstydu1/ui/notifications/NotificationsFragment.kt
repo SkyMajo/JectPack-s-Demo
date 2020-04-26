@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.skymajo.androidmvvmstydu1.R
+import com.skymajo.libnavannotation.FragmentDestination
 
+@FragmentDestination("nofications/nofications",false,false)
 class NotificationsFragment : Fragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel

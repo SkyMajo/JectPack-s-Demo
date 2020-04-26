@@ -1,9 +1,11 @@
 package com.skymajo.androidmvvmstydu1.model
 
-data class Destination(val isFragment: Boolean = false,
-                       val asStarter: Boolean = false,
-                       val needLogin: Boolean = false,
-                       val id: Int = 0,
-                       val clzName: String = "",
-                       val pageUrl: String = ""
+import com.alibaba.fastjson.annotation.JSONCreator
+
+data class Destination  @JSONCreator constructor(val isFragment: Boolean,
+                                                 val asStarter: Boolean,
+                                                 val needLogin: Boolean,
+                                                 val id: Int,
+                                                 val clzName: String,
+                                                 val pageUrl: String
 )

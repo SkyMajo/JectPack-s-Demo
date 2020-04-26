@@ -62,7 +62,7 @@ class NavProcessor : AbstractProcessor() {
                 val path = resource.toUri().path
                 messager!!.printMessage(Diagnostic.Kind.NOTE, path.toString())
                 val appPath = path.substring(0, path.indexOf("app") + 4)
-                val asstesPath = "$appPath/src/main/res/assets/"
+                val asstesPath = "$appPath/src/main/assets/"
                 val file = File(asstesPath)
                 if (!file.exists()) {
                     file.mkdirs()
@@ -74,7 +74,7 @@ class NavProcessor : AbstractProcessor() {
                 outPutFile.createNewFile()
                 val content = JSON.toJSONString(destMap)
                 outputStream = FileOutputStream(outPutFile)
-                writer = OutputStreamWriter(outputStream!!)
+                writer = OutputStreamWriter(outputStream)
                 writer.write(content)
                 writer.flush()
             } catch (e: IOException) {
