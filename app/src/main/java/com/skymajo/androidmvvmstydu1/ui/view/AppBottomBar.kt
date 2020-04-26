@@ -48,11 +48,9 @@ constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             if (id<0){
                 return
             }
-            if(tab.index != 2) {
-                var item = menu.add(0, id, tab.index, tab.title)
-                Log.e("MaxItemCount", maxItemCount.toString())
-                item.setIcon(drableList[tab.index])
-            }
+            var item = menu.add(0, id, tab.index, tab.title)
+            Log.e("MaxItemCount", maxItemCount.toString())
+            item.setIcon(drableList[tab.index])
         }
         for (tab in tabs) {
             var iconSize = dp2px(tab.size)

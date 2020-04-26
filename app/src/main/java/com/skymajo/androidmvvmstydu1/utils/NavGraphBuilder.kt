@@ -27,22 +27,19 @@ class NavGraphBuilder {
                 fragmentDestination.id = node.id
                 fragmentDestination.addDeepLink(node.pageUrl)
                 fragmentDestination.className = node.clzName
-                if (node.asStarter){
-                    navGraph.startDestination = node.id
-                }
+
                 navGraph.addDestination(fragmentDestination)
             }else{
                 var activityDestination = activityNavigator.createDestination()
                 activityDestination.id = node.id
                 activityDestination.addDeepLink(node.pageUrl)
                 activityDestination.setComponentName(ComponentName(AppGlobals.getApplication()!!.packageName,node.clzName))
-                if (node.asStarter){
-                    navGraph.startDestination = node.id
-                }
+
                 navGraph.addDestination(activityDestination)
             }
-
-
+            if (node.asStarter){
+                navGraph.startDestination = node.id
+            }
         }
         navController.graph = navGraph
     }
