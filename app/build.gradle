@@ -57,5 +57,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     //降低版本到1.2.32
     implementation 'com.alibaba:fastjson:1.2.32'
+    implementation project(":libnetwork")
 
 }
