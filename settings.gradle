@@ -1,2 +1,2 @@
-include ':app', ':libnavannotation', ':libnavcompile', ':libnetwork'
+include ':app', ':libnavannotation', ':libnavcompile', ':libnetwork', ':mylibrary'
 rootProject.name='AndroidMvvMStydu1'

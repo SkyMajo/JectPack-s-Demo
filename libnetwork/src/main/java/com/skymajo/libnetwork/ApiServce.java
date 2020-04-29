@@ -67,7 +67,6 @@ public class ApiServce {
     }
 
     public static void init(String baseUrl){
-
     }
     public static void init(String baseUrl,Convert convert){
         sBaseUrl = baseUrl;
