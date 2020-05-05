@@ -1,0 +1,26 @@
+{
+  "activeColor": "#333333",
+  "inActiveColor": "#666666",
+  "tabs": [{
+    "size": 24,
+    "enable": true,
+    "index": 0,
+    "pageUrl": "dash/dash",
+    "title": "首页",
+    "tintColor": "#ffffff"
+  }, {
+    "size": 24,
+    "enable": true,
+    "index": 1,
+    "pageUrl": "home/home",
+    "tintColor": "#ffffff",
+    "title": "沙发"
+  }, {
+    "size": 24,
+    "enable": true,
+    "index": 2,
+    "pageUrl": "nofications/nofications",
+    "tintColor": "#ffffff",
+    "title": "我的"
+  }]
+}
