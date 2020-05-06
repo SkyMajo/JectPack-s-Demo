@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+        <variable
+            name="user"
+            type="User" />
+        <import type="com.skymajo.androidmvvmstydu1.model.User"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_16">
+
+        <ImageView
+            android:id="@+id/avatar"
+            tools:src="@mipmap/ic_launcher"
+            app:image_url="@{user.avatar}"
+            app:isCircle="@{true}"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40" />
+
+        <TextView
+            android:text="@{user.name}"
+            android:textStyle="bold"
+            android:textSize="@dimen/sp_14"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textColor="@color/color_333"
+            android:gravity="center" />
+    </LinearLayout>
+</layout>
