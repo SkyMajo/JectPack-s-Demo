@@ -1,6 +1,7 @@
 # JectPack-s-Demo
 
-### 这是我学习的一个MVVM的Android音视频项目，用来学习，欢迎Fork，项目会同步我的学习进度，目前一到DataBinding。
+### 学习MVVM jetpack体系的Android短视频项目，欢迎Fork，项目会同步学习进度更新，目前到DataBinding。
+### 自我监督，争取日更。
 ### the project is a good MVVM style Android project.
 ### welcome to Fork this , study mvvm.
 
