@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="feed"
+            type="Feed" />
+        <import type="com.skymajo.androidmvvmstydu1.model.Feed"/>
+        <import type="com.skymajo.androidmvvmstydu1.utils.StringConvert"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16">
+
+        <com.google.android.material.button.MaterialButton
+            app:icon="@{feed.ugc.hasLiked?@drawable/ic_launcher:@drawable/ic_launcher}"
+            android:text="@{feed.ugc.likeCount>0?StringConvert.ConvertFeedUgc(feed.ugc.likeCount):feed.ugc.likeCount}"
+            android:textColor="@{feed.ugc.likeCount>0?@color/color_theme:@color/color_3d3}"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_14"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_4"
+            tools:text="1000"
+            tools:icon="@drawable/ic_launcher"
+            android:backgroundTint="@color/color_white"
+            android:layout_height="match_parent" />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            app:icon="@{feed.ugc.hasdiss?@drawable/ic_launcher:@drawable/ic_launcher}"
+            android:text="踩"
+            android:textColor="@{feed.ugc.hasDissed>0?@color/color_theme:@color/color_3d3}"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_14"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_4"
+            tools:text="1000"
+            tools:icon="@drawable/ic_launcher"
+            android:backgroundTint="@color/color_white"
+            android:layout_height="match_parent" />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            app:icon="@drawable/ic_launcher"
+            android:text="@{feed.ugc.commentCount>0?StringConvert.ConvertFeedUgc(feed.ugc.commentCount):feed.ugc.commentCount}"
+            android:textColor="@color/color_3d3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_14"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_4"
+            tools:text="1000"
+            tools:icon="@drawable/ic_launcher"
+            android:backgroundTint="@color/color_white"
+            android:layout_height="match_parent" />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            app:icon="@drawable/ic_launcher"
+            android:text="@{feed.ugc.shareCount>0?StringConvert.ConvertFeedUgc(feed.ugc.shareCount):feed.ugc.shareCount}"
+            android:textColor="@color/color_3d3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_14"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_4"
+            tools:text="1000"
+            tools:icon="@drawable/ic_launcher"
+            android:backgroundTint="@color/color_white"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</layout>

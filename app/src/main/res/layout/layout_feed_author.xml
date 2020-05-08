@@ -19,7 +19,7 @@
         android:layout_marginBottom="@dimen/dp_10"
         android:paddingRight="@dimen/dp_16">
 
-        <ImageView
+        <com.skymajo.androidmvvmstydu1.view.MajoImageView
             android:id="@+id/avatar"
             tools:src="@mipmap/ic_launcher"
             app:image_url="@{user.avatar}"

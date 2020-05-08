@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="comment"
+            type="com.skymajo.androidmvvmstydu1.model.Comment" />
+
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+        <import type="com.skymajo.androidmvvmstydu1.utils.StringConvert"/>
+    </data>
+
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:background="@color/color_gray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_60"
+            android:layout_gravity="right|top"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_20"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <com.skymajo.androidmvvmstydu1.view.MajoImageView
+                    android:id="@+id/avatar"
+                    app:image_url="@{comment.author.avatar}"
+                    isCircle="@{true}"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:textColor="@color/color_3d3"
+                    android:textSize="@dimen/sp_12"
+                    android:text="@{comment.author.name}" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="@{comment.ugc.hasLiked?@color/color_theme:@color/color_3d3}"
+                    android:text="@{comment.ugc.likeCount>0?StringConvert.ConvertFeedUgc(comment.ugc.likeCount):null}"
+                    tools:text="1000" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:src="@{comment.ugc.hasLiked?@drawable/ic_launcher:@drawable/ic_launcher}" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/color_3d3"
+                android:layout_marginRight="@dimen/dp_36"
+                android:ellipsize="end"
+                android:text="@{comment.commentText}"
+                android:visibility="@{TextUtils.isEmpty(comment.commentText)?View.GONE:View.VISIBLE}"
+                tools:text="伊蕾娜是由日本轻小说家白石定规执笔，插画家あずーる担任插画，GA文库所属轻小说作品《魔女之旅》的角色,年纪轻轻便成为最高阶魔法师「魔女」的灰发少女。对幼时阅读的《妮可冒险记》怀抱憧憬，因而成为旅人。" />
+
+            <FrameLayout
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <com.skymajo.androidmvvmstydu1.view.MajoImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    image_url="@{comment.imageUrl}"
+                    isCircle="@{false}"
+                    android:background="@color/color_theme"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:visibility="@{comment.commentType==2?View.VISIBLE:View.GONE}"
+                    android:src="@mipmap/ic_launcher" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>
