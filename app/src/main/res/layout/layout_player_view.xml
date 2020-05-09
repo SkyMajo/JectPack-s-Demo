@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.skymajo.androidmvvmstydu1.view.MajoImageView
+        android:id="@+id/blur_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:background="@color/color_theme"
+        />
+
+<!--    真正播放视频的View，会动态移出添加到这里-->
+
+    <com.skymajo.androidmvvmstydu1.view.MajoImageView
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:background="@color/color_theme"
+        />
+
+    <ImageView
+        android:id="@+id/play_btn"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:src="@drawable/ic_launcher"
+    android:layout_gravity="center"/>
+
+<!--    底部进度条-->
+
+
+    <ProgressBar
+        android:id="@+id/buffer_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/color_theme"
+        android:visibility="gone"/>
+
+</merge>

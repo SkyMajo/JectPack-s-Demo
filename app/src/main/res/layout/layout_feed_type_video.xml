@@ -25,6 +25,14 @@
             app:feedText="@{feed.feeds_text}"/>
 <!--        图片/视频区域-->
 
+
+
+        <com.skymajo.androidmvvmstydu1.ui.view.ListPlayerView
+            android:id="@+id/list_player_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"/>
+
         <com.skymajo.androidmvvmstydu1.view.MajoImageView
             android:id="@+id/feed_image"
             android:layout_marginBottom="@dimen/dp_10"
