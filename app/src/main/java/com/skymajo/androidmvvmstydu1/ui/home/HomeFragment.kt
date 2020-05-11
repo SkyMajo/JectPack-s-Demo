@@ -8,12 +8,21 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.skymajo.androidmvvmstydu1.R
+import com.skymajo.androidmvvmstydu1.model.Feed
+import com.skymajo.androidmvvmstydu1.ui.AbsListFragment
 import com.skymajo.libnavannotation.FragmentDestination
 
 
 @FragmentDestination("home/home",false,true)
-class HomeFragment : Fragment() {
+class HomeFragment : AbsListFragment<Feed>() {
+
+
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -31,4 +40,19 @@ class HomeFragment : Fragment() {
         })
         return root
     }
+
+    override fun OnRefreshListener(): OnRefreshListener {
+
+    }
+
+    override fun OnLoadMoreListener(): OnLoadMoreListener {
+
+    }
+
+    override fun getAdapter(): PagedListAdapter<Feed, RecyclerView.ViewHolder> {
+
+    }
+
+
+
 }
