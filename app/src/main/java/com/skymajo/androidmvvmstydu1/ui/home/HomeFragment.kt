@@ -35,24 +35,25 @@ class HomeFragment : AbsListFragment<Feed>() {
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(this, Observer {
+        homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
     }
 
-    override fun OnRefreshListener(): OnRefreshListener {
 
-    }
-
-    override fun OnLoadMoreListener(): OnLoadMoreListener {
-
-    }
 
     override fun getAdapter(): PagedListAdapter<Feed, RecyclerView.ViewHolder> {
 
     }
 
+    override fun OnRefreshListener(linster: OnRefreshListener) {
+
+    }
+
+    override fun OnLoadMoreListener(linster: OnLoadMoreListener) {
+
+    }
 
 
 }

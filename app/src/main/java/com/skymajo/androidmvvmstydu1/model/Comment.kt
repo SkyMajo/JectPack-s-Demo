@@ -18,4 +18,23 @@ data class Comment(
     var author:User,
     var ugc: Ugc
 
-)
+){
+    override fun equals(other: Any?): Boolean {
+        var comment = other as Comment
+        return (comment.id == id
+                && comment.itemId == itemId
+                && comment.userId == userId
+                && comment.commentType == commentType
+                && comment.createTime == createTime
+                && comment.commentCount == commentCount
+                && comment.likeCount == likeCount
+                && comment.commentText == commentText
+                && comment.imageUrl == imageUrl
+                && comment.videoUrl == videoUrl
+                && comment.width == width
+                && comment.height == height
+                && comment.hasLiked == hasLiked
+                && comment.author == author
+                && comment.ugc == ugc)
+    }
+}

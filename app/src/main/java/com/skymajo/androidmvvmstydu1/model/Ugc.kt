@@ -8,4 +8,13 @@ data class Ugc(
     var hasLiked:Boolean,
     var hasdiss:Boolean,
     var hasDissed:Boolean
-)
+){
+    override fun equals(other: Any?): Boolean {
+        var ugc = other as Ugc
+        return (ugc.likeCount == likeCount
+                && ugc.shareCount == shareCount
+                && ugc.commentCount == commentCount
+                && ugc.hasFavorite == hasFavorite
+                )
+    }
+}

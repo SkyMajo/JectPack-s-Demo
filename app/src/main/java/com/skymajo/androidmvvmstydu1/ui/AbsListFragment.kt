@@ -36,8 +36,8 @@ abstract class AbsListFragment<T> :Fragment(){
 
         mRefrshLayout!!.setEnableRefresh(true)
         mRefrshLayout!!.setEnableLoadMore(true)
-        mRefrshLayout!!.setOnRefreshListener(OnRefreshListener())
-        mRefrshLayout!!.setOnLoadMoreListener(OnLoadMoreListener())
+//        mRefrshLayout!!.setOnRefreshListener(OnRefreshListener())
+//        mRefrshLayout!!.setOnLoadMoreListener(OnLoadMoreListener())
 
         adapter = getAdapter()
         mRecyclerView!!.setAdapter(adapter)
@@ -76,7 +76,7 @@ abstract class AbsListFragment<T> :Fragment(){
 
     abstract fun getAdapter (): PagedListAdapter<T, RecyclerView.ViewHolder>
 
-    abstract fun OnRefreshListener():OnRefreshListener
-    abstract fun OnLoadMoreListener():OnLoadMoreListener
+    abstract fun OnRefreshListener(linster:OnRefreshListener)
+    abstract fun OnLoadMoreListener(linster:OnLoadMoreListener)
 
 }

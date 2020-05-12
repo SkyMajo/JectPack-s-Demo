@@ -35,4 +35,24 @@ data class User(@SerializedName("followCount")
                 @SerializedName("expires_time")
                   val expiresTime: Long,
                 @SerializedName("favoriteCount")
-                  val favoriteCount: Int)
+                  val favoriteCount: Int){
+        override fun equals(other: Any?): Boolean {
+            var user = other as User
+            return (user.followCount == followCount
+                    &&user.hasFollow == hasFollow
+                    &&user.qqOpenId == qqOpenId
+                    &&user.feedCount == feedCount
+                    &&user.description == description
+                    &&user.likeCount == likeCount
+                    &&user.avatar == avatar
+                    &&user.commentCount == commentCount
+                    &&user.topCommentCount == topCommentCount
+                    &&user.score == score
+                    &&user.name == name
+                    &&user.id == id
+                    &&user.historyCount == historyCount
+                    &&user.followerCount == followerCount
+                    &&user.expiresTime == expiresTime
+                    &&user.favoriteCount ==favoriteCount)
+    }
+}

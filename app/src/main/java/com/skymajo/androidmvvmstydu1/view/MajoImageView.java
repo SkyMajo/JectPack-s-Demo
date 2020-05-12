@@ -48,7 +48,7 @@ public class MajoImageView extends AppCompatImageView {
     }
 
 
-    public void bindData(int widthPx , int heightPx , int marginLeft , int marginRight,String imgUrl){
+    public void bindData(int widthPx , int heightPx , int marginLeft ,String imgUrl){
         bindData(widthPx,heightPx,marginLeft,PixUtils.getScreemWidth(),PixUtils.getScreemWidth(),imgUrl);
     }
 
