@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.32'
     implementation 'androidx.room:room-runtime:2.2.5'
     annotationProcessor 'androidx.room:room-compiler:2.2.5'
+//    implementation 'com.google.code.gson:gson:2.8.6'
     implementation project(":libcommon")
-    compileOnly project(":libcommon")
+//    compileOnly project(":libcommon")
 }

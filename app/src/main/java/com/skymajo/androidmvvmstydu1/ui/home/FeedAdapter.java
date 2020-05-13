@@ -1,5 +1,6 @@
 package com.skymajo.androidmvvmstydu1.ui.home;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     private final LayoutInflater inflate = null;
     private String category;
 
-    protected FeedAdapter(@NonNull DiffUtil.ItemCallback<Feed> diffCallback, String category) {
+    protected FeedAdapter(Context context, String category) {
         super(new DiffUtil.ItemCallback<Feed>() {
             @Override
             public boolean areItemsTheSame(@NonNull Feed oldItem, @NonNull Feed newItem) {

@@ -1,12 +1,15 @@
 package com.skymajo.libnetcache;
 
 
+import com.alibaba.fastjson.TypeReference;
+
 import java.net.HttpURLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
@@ -69,14 +72,25 @@ public class ApiServce {
     }
 
     public static void init(String baseUrl){
+        init(baseUrl,null);
     }
-    public static void init(String baseUrl, com.skymajo.libnetcache.Convert convert){
+
+    public static void init(String baseUrl, Convert convert){
         sBaseUrl = baseUrl;
         if(convert == null){
-            convert = (com.skymajo.libnetcache.Convert) new com.skymajo.libnetcache.JsonConvert();
+            convert = new JsonConvert();
         }
         sConvert = convert;
     }
+
+    public static  <T> GetRequest<T> get(String url){
+        return new GetRequest<>(sBaseUrl+url);
+    }
+
+    public static  <T> PostRequest<T> post(String url){
+        return new PostRequest<>(sBaseUrl+url);
+    }
+
 
 
 }

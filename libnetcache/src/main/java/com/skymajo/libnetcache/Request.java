@@ -1,9 +1,11 @@
 package com.skymajo.libnetcache;
 
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.arch.core.executor.ArchTaskExecutor;
 
 import com.skymajo.libnetcache.cache.CacheManager;
@@ -23,8 +25,9 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
-public abstract class Request<T,R> {
+public abstract class Request<T,R> implements Cloneable {
     protected String mUrl;
+    private Class mClaz;
     protected HashMap<String,String> headers = new HashMap<>();
     protected HashMap<String,Object> params = new HashMap<>();
 
@@ -53,12 +56,16 @@ public abstract class Request<T,R> {
         return (R) this;
     }
 
-    public R addParam(String key,Object value){
+    public R addParam(String key, Object value) {
+        if (value == null) {
+            return (R) this;
+        }
+        //int string byte char
         try {
-            Field field = value.getClass().getField("Type");
-            Class clz = (Class) field.get(null);
-            if (clz.isPrimitive()){
-                params.put(key,value);
+            Field field = value.getClass().getField("TYPE");
+            Class claz = (Class) field.get(null);
+            if (claz.isPrimitive()) {
+                params.put(key, value);
             }
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -67,6 +74,7 @@ public abstract class Request<T,R> {
         }
         return (R) this;
     }
+
 
     public R cacheStrategy(@CacheStrategy int cacheStrategy){
         mCacheStrategy = cacheStrategy;
@@ -78,6 +86,7 @@ public abstract class Request<T,R> {
         return (R) this;
     }
 
+    @SuppressLint("RestrictedApi")
     public void execute(final JsonCallBack<T> callBack){
 
 
@@ -153,22 +162,30 @@ public abstract class Request<T,R> {
 
     }
 
-    public ApiResponse<T> exqueue(){
-        if (mCacheStrategy == CACHE_ONLY){
+    public ApiResponse<T> exqueue() {
+        if (mType == null && mClaz == null) {
+            throw new RuntimeException("同步方法,type|classType 类型必须设置");
+        }
+
+        if (mCacheStrategy == CACHE_ONLY) {
             return readCache();
         }
-        ApiResponse<T> result = null;
-        try {
-            Response response = getCall().execute();
-           result = parseResponse(response, null);
-        } catch (IOException e) {
-            if(result == null){
-                result = new ApiResponse<>();
-                result.message = e.getMessage();
+
+        if (mCacheStrategy != CACHE_ONLY) {
+            ApiResponse<T> result = null;
+            try {
+                Response response = getCall().execute();
+                result = parseResponse(response, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+                if (result == null) {
+                    result = new ApiResponse<>();
+                    result.message = e.getMessage();
+                }
             }
-            e.printStackTrace();
+            return result;
         }
-        return result;
+        return null;
     }
 
 
@@ -224,6 +241,12 @@ public abstract class Request<T,R> {
     private String createCacheKey() {
         cacheKey = UrlCreator.createUrlFormParams(mUrl,params);
         return cacheKey;
+    }
+
+    @NonNull
+    @Override
+    public Request clone() throws CloneNotSupportedException {
+        return (Request<T, R>) super.clone();
     }
 
 }

@@ -1,58 +1,69 @@
 package com.skymajo.androidmvvmstydu1.model
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import android.text.TextUtils
+import kotlinx.android.parcel.Parcelize
 
-data class User(@SerializedName("followCount")
-                  val followCount: Int,
-                @SerializedName("hasFollow")
-                  val hasFollow: Boolean,
-                @SerializedName("qqOpenId")
-                  val qqOpenId: String,
-                @SerializedName("feedCount")
-                  val feedCount: Int,
-                @SerializedName("description")
-                  val description: String,
-                @SerializedName("likeCount")
-                  val likeCount: Int,
-                @SerializedName("avatar")
-                  val avatar: String,
-                @SerializedName("userId")
-                  val userId: Int,
-                @SerializedName("commentCount")
-                  val commentCount: Int,
-                @SerializedName("topCommentCount")
-                  val topCommentCount: Int,
-                @SerializedName("score")
-                  val score: Int,
-                @SerializedName("name")
-                  val name: String,
-                @SerializedName("id")
-                  val id: Int,
-                @SerializedName("historyCount")
-                  val historyCount: Int,
-                @SerializedName("followerCount")
-                  val followerCount: Int,
-                @SerializedName("expires_time")
-                  val expiresTime: Long,
-                @SerializedName("favoriteCount")
-                  val favoriteCount: Int){
-        override fun equals(other: Any?): Boolean {
-            var user = other as User
-            return (user.followCount == followCount
-                    &&user.hasFollow == hasFollow
-                    &&user.qqOpenId == qqOpenId
-                    &&user.feedCount == feedCount
-                    &&user.description == description
-                    &&user.likeCount == likeCount
-                    &&user.avatar == avatar
-                    &&user.commentCount == commentCount
-                    &&user.topCommentCount == topCommentCount
-                    &&user.score == score
-                    &&user.name == name
-                    &&user.id == id
-                    &&user.historyCount == historyCount
-                    &&user.followerCount == followerCount
-                    &&user.expiresTime == expiresTime
-                    &&user.favoriteCount ==favoriteCount)
+
+/*
+{
+					"id": 1250,
+					"userId": 1578919786,
+					"name": "、蓅哖╰伊人为谁笑",
+					"avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+					"description": "这是一只神秘的jetpack",
+					"likeCount": 3,
+					"topCommentCount": 0,
+					"followCount": 0,
+					"followerCount": 2,
+					"qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+					"expires_time": 1586695789903,
+					"score": 0,
+					"historyCount": 222,
+					"commentCount": 9,
+					"favoriteCount": 0,
+					"feedCount": 0,
+					"hasFollow": false
+				}
+ */
+@Parcelize
+data class User(
+    val id:Int,
+    val userId:Long,
+    val name:String,
+    val avatar:String,
+    val description:String,
+    val likeCount:Int,
+    val topCommentCount:Int,
+    val followCount:Int,
+    val followerCount:Int,
+    val qqOpenId:Long,
+    val expires_time:Int,
+    val score:Int,
+    val historyCount:Int,
+    val commentCount:Int,
+    val favoriteCount:Int,
+    val feedCount:Int,
+    val hasFollow:Boolean
+): Parcelable {
+    override fun equals(other: Any?): Boolean {
+        if(other==null || !(other is User))
+            return false
+        var newUser= other as User
+        return TextUtils.equals(name,newUser.name)
+                && TextUtils.equals(avatar,newUser.avatar)
+                && TextUtils.equals(description,newUser.description)
+                &&likeCount==newUser.likeCount
+                &&topCommentCount==newUser.topCommentCount
+                &&followCount==newUser.followCount
+                &&followerCount==newUser.followerCount
+                &&qqOpenId==newUser.qqOpenId
+                &&expires_time==newUser.expires_time
+                &&score==newUser.score
+                &&historyCount==newUser.historyCount
+                &&commentCount==newUser.commentCount
+                &&favoriteCount==newUser.favoriteCount
+                &&feedCount==newUser.feedCount
+                &&hasFollow==newUser.hasFollow
     }
 }

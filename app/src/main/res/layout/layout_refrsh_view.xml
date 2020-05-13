@@ -6,12 +6,11 @@
     </data>
 
     <FrameLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refrsh_layout"
+            android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -19,15 +18,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         <com.skymajo.androidmvvmstydu1.view.EmptyView

@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_12"
                     android:textColor="@{comment.ugc.hasLiked?@color/color_theme:@color/color_3d3}"
-                    android:text="@{comment.ugc.likeCount>0?StringConvert.ConvertFeedUgc(comment.ugc.likeCount):null}"
+                    android:text="@{comment.ugc.likeCount>0?StringConvert.INSTANCE.ConvertFeedUgc(comment.ugc.likeCount):null}"
                     tools:text="1000" />
 
                 <ImageView

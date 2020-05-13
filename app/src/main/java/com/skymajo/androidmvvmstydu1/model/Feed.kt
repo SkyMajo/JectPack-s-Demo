@@ -1,41 +1,62 @@
 package com.skymajo.androidmvvmstydu1.model
 
-data class Feed(
-    var id:Int,
-    var itemId:Long,
-    var itemType:Int,
-    var createTime:Int,
-    var duration:Double,
-    var feeds_text:String,
-    var authorId:Long,
-    var activityIcon:String,
-    var activityText : String,
-    var width : Int,
-    var height:Int,
-    var url:String,
-    var cover:String,
+import android.os.Parcelable
+import android.text.TextUtils
+import kotlinx.android.parcel.Parcelize
 
+/*
+                "id": 428,
+				"itemId": 1578976510452,
+				"itemType": 2,
+				"createTime": 1578977844500,
+				"duration": 8,
+				"feeds_text": "2020他来了，就在眼前了",
+				"authorId": 1578919786,
+				"activityIcon": null,
+				"activityText": "2020新年快乐",
+				"width": 960,
+				"height": 540,
+				"url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/New%20Year%20-%2029212-video.mp4",
+				"cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2020%E5%B0%81%E9%9D%A2%E5%9B%BE.png",
+ */
 
-    var author:User,
-    var comment: Comment,
-    var ugc: Ugc
-){
+@Parcelize
+data class Feed(val id:Int,
+                val itemId:Long,
+                val itemType:Int,
+                val createTime:Int,
+                val duration:Double,
+                val feeds_text:String,
+                val authorId:Long,
+                val activityIcon:String,
+                val activityText:String,
+                val width:Int,
+                val height:Int,
+                val url:String,
+                val cover:String,
+                val author:User,
+                val topComment:Comment,
+                val ugc:Ugc
+):Parcelable{
     override fun equals(other: Any?): Boolean {
-        var feed = other as Feed
-        return (feed.id == id
-                && feed.itemType == itemType
-                && feed.createTime == createTime
-                && feed.duration == duration
-                && feed.feeds_text == feeds_text
-                && feed.authorId == authorId
-                && feed.activityIcon == activityIcon
-                && feed.activityText == activityText
-                && feed.width == width
-                && feed.height == height
-                && feed.url == url
-                && feed.cover == cover
-                && feed.author == author
-                && feed.comment == comment
-                && feed.ugc == ugc)
+        if(other ==null || !(other is Feed))
+            return false
+        val feed=other as Feed
+        return id == feed.id
+                &&itemId==feed.itemId
+                &&itemType==feed.itemType
+                &&createTime==feed.createTime
+                &&duration==feed.duration
+                &&TextUtils.equals(feeds_text,feed.feeds_text)
+                &&authorId==feed.authorId
+                &&TextUtils.equals(activityIcon,feed.activityIcon)
+                &&TextUtils.equals(activityText,feed.activityText)
+                &&width==feed.width
+                &&height==feed.height
+                &&TextUtils.equals(url,feed.url)
+                &&TextUtils.equals(cover,feed.cover)
+                &&(author!=null && author.equals(feed.author))
+                &&(topComment!=null && topComment.equals(feed.topComment))
+                &&(ugc!=null && ugc.equals(feed.ugc))
     }
 }

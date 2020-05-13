@@ -1,5 +1,6 @@
 package com.skymajo.libnetcache.cache;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Database;
@@ -36,9 +37,10 @@ public class Cache implements Serializable {
 
     //@Ignore 忽略，如果被Ignor标记了，就不会生成对应的字段在数据表里
     @PrimaryKey //主键
-    @NotNull  String key;
+    @NonNull  String key;
 
     //@ColumnInfo(name = "_data") //映射成数据库中的字段名
+    @NonNull
     byte[] data;
     //关联查询(子查询)
     //entity -> 关联的类

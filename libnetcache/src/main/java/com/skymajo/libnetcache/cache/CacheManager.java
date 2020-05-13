@@ -11,7 +11,7 @@ public class CacheManager {
         Cache cache = new Cache();
         cache.key = key;
         cache.data = toByteArray(body);
-        CacheDataBase.get().getCache().save(cache);
+        CacheDataBase.get().getCache().sava(cache);
 
     }
 

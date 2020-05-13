@@ -5,7 +5,7 @@
     <data>
         <variable
             name="feed"
-            type="com.skymajo.androidmvvmstydu1.model.Feed" />
+            type="Feed" />
         <import type="com.skymajo.androidmvvmstydu1.model.Feed"/>
     </data>
 

@@ -21,7 +21,7 @@
 
         <com.google.android.material.button.MaterialButton
             app:icon="@{feed.ugc.hasLiked?@drawable/ic_launcher:@drawable/ic_launcher}"
-            android:text="@{feed.ugc.likeCount>0?StringConvert.ConvertFeedUgc(feed.ugc.likeCount):feed.ugc.likeCount}"
+            android:text="@{feed.ugc.likeCount>0?StringConvert.INSTANCE.ConvertFeedUgc(feed.ugc.likeCount):feed.ugc.likeCount}"
             android:textColor="@{feed.ugc.likeCount>0?@color/color_theme:@color/color_3d3}"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -53,7 +53,7 @@
 
         <com.google.android.material.button.MaterialButton
             app:icon="@drawable/ic_launcher"
-            android:text="@{feed.ugc.commentCount>0?StringConvert.ConvertFeedUgc(feed.ugc.commentCount):feed.ugc.commentCount}"
+            android:text="@{feed.ugc.commentCount>0?StringConvert.INSTANCE.ConvertFeedUgc(feed.ugc.commentCount):feed.ugc.commentCount}"
             android:textColor="@color/color_3d3"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -69,7 +69,7 @@
 
         <com.google.android.material.button.MaterialButton
             app:icon="@drawable/ic_launcher"
-            android:text="@{feed.ugc.shareCount>0?StringConvert.ConvertFeedUgc(feed.ugc.shareCount):feed.ugc.shareCount}"
+            android:text="@{feed.ugc.shareCount>0?StringConvert.INSTANCE.ConvertFeedUgc(feed.ugc.shareCount):feed.ugc.shareCount}"
             android:textColor="@color/color_3d3"
             android:layout_width="0dp"
             android:layout_weight="1"

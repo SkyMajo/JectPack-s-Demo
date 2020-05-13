@@ -8,7 +8,7 @@ import androidx.room.*
 // 方便room复写具体实现方法；
 
 @Dao
-interface CacheDao {
+abstract class BaseDao<T>{
 
     //Insert注解中onConflict作用是如果插入发生了冲突(冲突只存在于主键中)的解决方式
     //REPLACE 替换老的，使用新的
@@ -16,22 +16,32 @@ interface CacheDao {
     //ABORT 终止操作，使用老的
     //FAIL 提交失败
     //IGNORE 忽略冲突
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(cache: Cache)
 
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    open abstract fun sava(entry: T)
 
     //"select * from cache where `key`=:key"
     //从cache表中查询，``中的key是表中列的名称，第二个key是传入数据
     //爆红的原因是此时表还没有映射过去，也就是数据库数据表还没有创建
-    @Query("select * from cache where `key`=:key")
-    fun getCache(key:String):Cache
-
+//    @Query("select *from cache where `key`=:key")
+//    open abstract fun getCache(key:String):Cache
 
     @Delete
-    fun delete(cache: Cache):Int
+    open abstract fun delete(cache:Cache)
 
-    //同Insert
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updata(cache: Cache):Int
+    open abstract fun update(cache: Cache)
+}
+
+
+
+@Dao
+abstract class CacheDao : BaseDao<Cache>(){
+
+    @Query("select *from cache where `key`=:key")
+    abstract  fun getCache(key: String):Cache
+
+
 
 }

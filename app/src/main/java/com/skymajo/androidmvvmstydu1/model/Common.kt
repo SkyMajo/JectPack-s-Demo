@@ -51,7 +51,7 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class Commonent(val id:Int,
+data class Common(val id:Int,
                   val itemId:Int,
                   val commentId:Int,
                   val userId:Int,

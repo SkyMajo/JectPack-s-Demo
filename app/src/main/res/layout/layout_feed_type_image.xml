@@ -5,46 +5,34 @@
     <data>
         <variable
             name="feed"
-            type="com.skymajo.androidmvvmstydu1.model.Feed" />
+            type="Feed" />
         <import type="com.skymajo.androidmvvmstydu1.model.Feed"/>
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <include
             layout="@layout/layout_feed_author"
             app:user="@{feed.author}"/>
-
         <include
             layout="@layout/layout_feed_text"
             app:feedText="@{feed.feeds_text}"/>
-<!--        图片/视频区域-->
-
+        <!--图片区域-->
         <com.skymajo.androidmvvmstydu1.view.MajoImageView
             android:id="@+id/feed_image"
-            android:layout_marginBottom="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
-
-
+            android:layout_marginBottom="@dimen/dp_10"/>
         <include
             layout="@layout/layout_feed_tag"
             app:tagText="@{feed.activityText}"/>
-
-
         <include
             layout="@layout/layout_feed_top_comment"
             app:comment="@{feed.topComment}"/>
-
         <include
             layout="@layout/layout_feed_interaction"
             app:feed="@{feed}"/>
-
     </LinearLayout>
 </layout>
