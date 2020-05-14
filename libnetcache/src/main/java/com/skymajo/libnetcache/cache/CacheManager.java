@@ -1,17 +1,16 @@
 package com.skymajo.libnetcache.cache;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class CacheManager {
-    public static <T> void save(String key, T body) {
+    public static <T> void save(int key, T body) {
         Cache cache = new Cache();
         cache.key = key;
         cache.data = toByteArray(body);
-        CacheDataBase.get().getCache().sava(cache);
+        CacheDataBase.get().getCache().save(cache);
 
     }
 

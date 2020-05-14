@@ -32,6 +32,7 @@ class HomeViewModel : AbsViewModel<Feed>() {
         return dataSource
     }
 
+
     var dataSource:ItemKeyedDataSource<Int,Feed> = object :ItemKeyedDataSource<Int,Feed>() {
         override fun loadInitial(
             params: LoadInitialParams<Int>,
@@ -39,8 +40,8 @@ class HomeViewModel : AbsViewModel<Feed>() {
             callback: LoadInitialCallback<Feed>) {
             //做加载初始化数据
             //首页网络数据请求
-            withCache = false
             loadData(0,callback)
+            withCache = false
         }
 
         override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Feed>) {
