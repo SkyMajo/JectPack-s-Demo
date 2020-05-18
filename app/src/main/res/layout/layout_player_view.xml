@@ -26,7 +26,7 @@
         android:id="@+id/play_btn"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
-        android:src="@drawable/ic_launcher"
+        android:src="@mipmap/icon_video"
     android:layout_gravity="center"/>
 
 <!--    底部进度条-->

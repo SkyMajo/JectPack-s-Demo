@@ -4,9 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="color_theme">#D81B60</color>
-    <color name="color_333">#333333</color>
+    <color name="color_333">#33 3333</color>
     <color name="color_2f2">#2f2f2f</color>
     <color name="color_gray">#AFAFAF</color>
+    <color name="color_gray2">#EDEDED</color>
     <color name="color_3d3">#3d3d3d</color>
     <color name="color_white">#fff</color>
     <color name="color_999">#999999</color>

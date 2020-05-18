@@ -11,19 +11,23 @@
 
     <ImageView
         android:id="@+id/empty_icon"
-        android:src="@drawable/ic_launcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_no_content"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_120"/>
 
     <TextView
         android:id="@+id/empty_text"
         tools:text="数据为空"
-        android:textSize="20sp"
-        android:textColor="@color/color_999"
+        android:text="数据为空"
+        android:textSize="@dimen/sp_23"
+        android:textColor="@color/color_2f2"
         android:gravity="center"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/empty_action"
         android:layout_marginTop="@dimen/dp_16"

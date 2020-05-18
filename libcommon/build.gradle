@@ -80,5 +80,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     //fastjson解析
-    api 'com.alibaba:fastjson:1.2.59'
+    api 'com.alibaba:fastjson:1.2.32'
+//    api 'com.google.code.gson:gson:2.8.6'
 }

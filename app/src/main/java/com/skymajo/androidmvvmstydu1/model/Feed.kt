@@ -3,6 +3,7 @@ package com.skymajo.androidmvvmstydu1.model
 import android.os.Parcelable
 import android.text.TextUtils
 import kotlinx.android.parcel.Parcelize
+import org.w3c.dom.Comment
 
 /*
                 "id": 428,
@@ -24,7 +25,7 @@ import kotlinx.android.parcel.Parcelize
 data class Feed(val id:Int,
                 val itemId:Long,
                 val itemType:Int,
-                val createTime:Int,
+                val createTime:String,
                 val duration:Double,
                 val feeds_text:String,
                 val authorId:Long,
@@ -35,7 +36,7 @@ data class Feed(val id:Int,
                 val url:String,
                 val cover:String,
                 val author:User,
-                val topComment:Comment,
+                val topComment: Commonent,
                 val ugc:Ugc
 ):Parcelable{
     override fun equals(other: Any?): Boolean {

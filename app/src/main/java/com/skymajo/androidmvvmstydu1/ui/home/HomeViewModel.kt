@@ -42,6 +42,7 @@ class HomeViewModel : AbsViewModel<Feed>() {
             //首页网络数据请求
             loadData(0,callback)
             withCache = false
+            Log.e("ItemKeyedDataSource:","走了$withCache")
         }
 
         override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Feed>) {
@@ -75,23 +76,28 @@ class HomeViewModel : AbsViewModel<Feed>() {
             request.execute(object : JsonCallBack<List<Feed>>() {
                 override fun onCacheSuccess(response: ApiResponse<List<Feed>>?) {
                     super.onCacheSuccess(response)
-                    Log.e("onCacheSuccess","onCacheSuccessD${response!!.body.size}")
+                    Log.e("onCacheSuccess","onCacheSuccessD${response.toString()}")
+                    var body = response?.body
+                    if(response?.body == null){
+                        withCache = false
+                    }
+
                 }
             })
         }
 
         try{
-
-            var netReqeust = if (withCache){request}else{request}
+            var newRequest=if(withCache) { request.clone() } else request
 //            var netReqeust = if (withCache){request}else{request}
-            netReqeust.cacheStrategy (if (key==0){Request.NET_CACHE}else{Request.NET_ONLY})
-            var reponse = netReqeust.exqueue()
+//            var netReqeust = if (withCache){request}else{request}
+            newRequest.cacheStrategy (if (key==0){Request.NET_CACHE}else{Request.NET_ONLY})
+            var reponse = newRequest.exqueue()
             var data:List<Feed> = if (reponse.body == null) {
                 Collections.emptyList<Any>()
             }else{
                 reponse.body
             } as List<Feed>
-
+            Log.e("result","${reponse.body}")
             callback.onResult(data)
 
             if(key>0){

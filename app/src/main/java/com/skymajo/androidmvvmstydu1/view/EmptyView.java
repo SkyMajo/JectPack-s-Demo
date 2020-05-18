@@ -47,7 +47,7 @@ public class EmptyView extends LinearLayout {
     }
 
     public void setEmptyText(String text){
-        emptyText.setText(TextUtils.isEmpty(text)?"暂无数据":text);
+//        emptyText.setText(TextUtils.isEmpty(text)?"暂无数据":text);
     }
 
 

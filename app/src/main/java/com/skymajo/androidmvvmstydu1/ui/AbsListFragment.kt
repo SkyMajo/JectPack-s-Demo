@@ -44,7 +44,7 @@ abstract class AbsListFragment<T, M : AbsViewModel<T>> :Fragment(), OnRefreshLis
     ): View? {
         binding = LayoutRefrshViewBinding.inflate(inflater, container, false)
         mRecyclerView = binding!!.recyclerView
-        mRefrshLayout = binding!!.refrshLayout
+        mRefrshLayout = binding!!.refreshLayout
         mEmptyView = binding!!.emptyView
 
         mRefrshLayout!!.setEnableRefresh(true)

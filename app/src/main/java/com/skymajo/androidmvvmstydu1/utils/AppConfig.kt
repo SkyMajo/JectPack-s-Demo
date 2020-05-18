@@ -30,7 +30,7 @@ object AppConfig {
         return sBottomBar!!
     }
 
-    fun getDestinationConfig ():HashMap<String,Destination>{
+    open fun getDestinationConfig ():HashMap<String,Destination>{
         if (sDestConfig == null){
           val content = parseFile("NavGraphJson.json")
             sDestConfig = Gson().fromJson<HashMap<String,Destination>>(content,object : TypeReference<java.util.HashMap<String, Destination>>() {}.type)

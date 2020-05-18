@@ -20,8 +20,8 @@ data class Ugc(val likeCount:Int,
                val commentCount:Int,
                val hasFavorite:Boolean,
                val hasLiked:Boolean,
-               val hasdiss:Boolean,
-               val hasDissed:Boolean
+               val hasdiss:Boolean
+//               val hasDissed:Boolean
 ): Parcelable {
     override fun equals(other: Any?): Boolean {
         if(other==null || !(other is Ugc))
@@ -33,6 +33,6 @@ data class Ugc(val likeCount:Int,
                 &&hasFavorite==newUgc.hasFavorite
                 &&hasLiked==newUgc.hasLiked
                 &&hasdiss==newUgc.hasdiss
-                &&hasDissed==newUgc.hasDissed
+//                &&hasDissed==newUgc.hasDissed
     }
 }

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="comment"
-            type="com.skymajo.androidmvvmstydu1.model.Comment" />
+            type="com.skymajo.androidmvvmstydu1.model.Commonent" />
 
         <import type="android.text.TextUtils"/>
         <import type="android.view.View"/>
@@ -20,7 +20,9 @@
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
-        android:background="@color/color_gray"
+        android:layout_marginTop="@dimen/dp_16"
+        android:visibility="@{TextUtils.isEmpty(comment.commentText)?View.GONE:View.VISIBLE}"
+        android:background="@color/color_gray2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -48,14 +50,15 @@
                     isCircle="@{true}"
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
-                    android:src="@mipmap/ic_launcher" />
+                    tools:src="@mipmap/ic_launcher" />
 
                 <TextView
                     android:id="@+id/user_name"
+                    tools:text="用户名"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_20"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_30"
+                    android:layout_marginLeft="@dimen/dp_16"
                     android:textColor="@color/color_3d3"
                     android:textSize="@dimen/sp_12"
                     android:text="@{comment.author.name}" />
@@ -64,6 +67,12 @@
                     android:layout_width="0dp"
                     android:layout_height="1px"
                     android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:src="@{comment.ugc.hasLiked?@drawable/icon_good1:@drawable/icon_good0}" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,13 +82,7 @@
                     android:text="@{comment.ugc.likeCount>0?StringConvert.INSTANCE.ConvertFeedUgc(comment.ugc.likeCount):null}"
                     tools:text="1000" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:layout_marginLeft="@dimen/dp_4"
-                    android:src="@{comment.ugc.hasLiked?@drawable/ic_launcher:@drawable/ic_launcher}" />
-            </LinearLayout>
+                 </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -101,16 +104,20 @@
                 <com.skymajo.androidmvvmstydu1.view.MajoImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}"
                     image_url="@{comment.imageUrl}"
                     isCircle="@{false}"
                     android:background="@color/color_theme"
                     tools:src="@mipmap/ic_launcher" />
 
+
+<!--                android:visibility="@{comment.commentType==2?View.VISIBLE:View.GONE}"-->
+
                 <ImageView
+                    android:visibility="gone"
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_gravity="center"
-                    android:visibility="@{comment.commentType==2?View.VISIBLE:View.GONE}"
                     android:src="@mipmap/ic_launcher" />
 
             </FrameLayout>

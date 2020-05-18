@@ -29,7 +29,9 @@ public abstract class CacheDataBase extends RoomDatabase {
 //                    .fallbackToDestructiveMigration()
                 //数据库升级异常后根据指定版本回滚
 //                    .fallbackToDestructiveMigrationFrom()
-                .addMigrations(CacheDataBase.migration)
+                //数据库升级的时候必备,不然会删除旧库,并重建
+//                .addMigrations(CacheDataBase.migration)
+
                 .build();
 
 

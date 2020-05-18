@@ -17,8 +17,9 @@ import com.skymajo.androidmvvmstydu1.model.Feed;
 
 public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> {
 
-    private final LayoutInflater inflate = null;
+    private  LayoutInflater inflate = null;
     private String category;
+    private Context mContext;
 
     protected FeedAdapter(Context context, String category) {
         super(new DiffUtil.ItemCallback<Feed>() {
@@ -32,7 +33,11 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
                 return false;
             }
         });
+        mContext = context;
+        inflate = LayoutInflater.from(context);
+        category = category;
         this.category = category;
+
     }
 
     @Override

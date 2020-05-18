@@ -3,16 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="feed"
             type="Feed" />
-        <import type="com.skymajo.androidmvvmstydu1.model.Feed"/>
+
+        <import type="com.skymajo.androidmvvmstydu1.model.Feed" />
+
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp_10">
         <include
             layout="@layout/layout_feed_author"
             app:user="@{feed.author}"/>

@@ -19,13 +19,8 @@ import com.skymajo.libnavannotation.FragmentDestination
 class HomeFragment : AbsListFragment<Feed, HomeViewModel>() {
 
 
-
-    private lateinit var homeViewModel: HomeViewModel
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun getAdapter(): PagedListAdapter<*,*> {
@@ -34,9 +29,9 @@ class HomeFragment : AbsListFragment<Feed, HomeViewModel>() {
         } else {
             arguments!!.getString("feedType")
         }
-        var adapter = FeedAdapter(context,feedType!!)
         return  FeedAdapter(context,feedType)
     }
+
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
 
