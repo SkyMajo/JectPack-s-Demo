@@ -29,6 +29,8 @@ public abstract class AbsViewModel<T> extends ViewModel {
 //                .setFetchExecutor()//传入线程池，用来异步调用，不需要传入，paging有默认的线程池
                 .setBoundaryCallback(callback)//这个CallBack可以监听到数据加载的状态,有状态之后可以知道，界面是否有数据，已加载数据。
                 .build();
+
+//        pagedData.observeForever();
     }
 
     public LiveData<PagedList<T>> getData(){

@@ -98,5 +98,8 @@ public class MajoImageView extends AppCompatImageView {
                         setBackground(resource);
                     }
                 });
+
+
+
     }
 }

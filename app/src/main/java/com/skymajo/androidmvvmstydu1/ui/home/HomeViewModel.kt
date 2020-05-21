@@ -42,7 +42,6 @@ class HomeViewModel : AbsViewModel<Feed>() {
             //首页网络数据请求
             loadData(0,callback)
             withCache = false
-            Log.e("ItemKeyedDataSource:","走了$withCache")
         }
 
         override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Feed>) {
