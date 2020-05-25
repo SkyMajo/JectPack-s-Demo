@@ -1,6 +1,6 @@
 # JectPack-s-Demo
 
-### 学习MVVM jetpack体系的Android短视频项目，欢迎Fork，项目会同步学习进度更新，目前到DataBinding。
+### 学习MVVM jetpack体系的Android短视频项目，欢迎Fork，项目会同步学习进度更新，目前到4.用户业务
 ### 自我监督，争取日更。
 ### the project is a good MVVM style Android project.
 ### welcome to Fork this , study mvvm.
