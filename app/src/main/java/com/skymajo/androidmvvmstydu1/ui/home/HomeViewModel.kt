@@ -1,26 +1,32 @@
 package com.skymajo.androidmvvmstydu1.ui.home
 
+import android.annotation.SuppressLint
 import android.util.Log
-import androidx.lifecycle.LiveData
+import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.paging.DataSource
 import androidx.paging.ItemKeyedDataSource
+import androidx.paging.PagedList
 import com.alibaba.fastjson.TypeReference
 import com.skymajo.androidmvvmstydu1.AbsViewModel
 import com.skymajo.androidmvvmstydu1.model.Feed
+import com.skymajo.androidmvvmstydu1.ui.MuteableDataSource
 import com.skymajo.libnetcache.ApiResponse
 import com.skymajo.libnetcache.ApiServce
 import com.skymajo.libnetcache.JsonCallBack
 import com.skymajo.libnetcache.Request
 import java.util.*
-import kotlin.collections.ArrayList
+import java.util.concurrent.atomic.AtomicBoolean
 
 class HomeViewModel : AbsViewModel<Feed>() {
 
 
     @Volatile
     private var withCache = true
+
+    private val loadAfter = AtomicBoolean(false)
+
+    public var cacheLiveData = MutableLiveData<PagedList<Feed>>()
 
 
     //DataSource<Key,Value> 数据源:Key对应加载数据对应的条件信息，Value对应数据实体类
@@ -31,6 +37,8 @@ class HomeViewModel : AbsViewModel<Feed>() {
     override fun createDataSource(): DataSource<*, *> {
         return dataSource
     }
+
+
 
 
     var dataSource:ItemKeyedDataSource<Int,Feed> = object :ItemKeyedDataSource<Int,Feed>() {
@@ -64,6 +72,9 @@ class HomeViewModel : AbsViewModel<Feed>() {
 
     private fun loadData(key: Int, callback: ItemKeyedDataSource.LoadCallback<Feed>) {
         ///feeds/queryHotFeedsList
+        if (key > 0) {
+            loadAfter.set(true)
+        }
         var request = ApiServce.get<Any>("/feeds/queryHotFeedsList")
             .addParam("feedType", null)
             .addParam("userId", 0)
@@ -75,10 +86,15 @@ class HomeViewModel : AbsViewModel<Feed>() {
             request.execute(object : JsonCallBack<List<Feed>>() {
                 override fun onCacheSuccess(response: ApiResponse<List<Feed>>?) {
                     super.onCacheSuccess(response)
-                    Log.e("onCacheSuccess","onCacheSuccessD${response.toString()}")
-                    var body = response?.body
                     if(response?.body == null){
+                        Log.e("onCacheSuccess","onCacheSuccess:null")
                         withCache = false
+                    }else{
+                    var body = response?.body
+                    var dataSource =  MuteableDataSource<Int,Feed>()
+                    dataSource.data.addAll(body!!)
+                    var buildNewPageList = dataSource.buildNewPageList(config)
+                    cacheLiveData.postValue(buildNewPageList)
                     }
 
                 }
@@ -87,8 +103,6 @@ class HomeViewModel : AbsViewModel<Feed>() {
 
         try{
             var newRequest=if(withCache) { request.clone() } else request
-//            var netReqeust = if (withCache){request}else{request}
-//            var netReqeust = if (withCache){request}else{request}
             newRequest.cacheStrategy (if (key==0){Request.NET_CACHE}else{Request.NET_ONLY})
             var reponse = newRequest.exqueue()
             var data:List<Feed> = if (reponse.body == null) {
@@ -98,15 +112,31 @@ class HomeViewModel : AbsViewModel<Feed>() {
             } as List<Feed>
             Log.e("result","${reponse.body}")
             callback.onResult(data)
-
             if(key>0){
-                //通过LiveData发送数据 告诉UI层 是否应该主动关闭上拉加载分页的动画
+                //通过liveData发送数据 告诉UI层 是否应该主动关闭上拉加载分页的动画
                 mutableLiveData.postValue(data.isNotEmpty())
+                loadAfter.set(false)
             }
         }catch (e:CloneNotSupportedException){
 
         }
 
     }
+    @SuppressLint("RestrictedApi")
+    fun loadAfter(
+        id: Int,
+        callBack: ItemKeyedDataSource.LoadCallback<Feed>
+    ) {
+        if (loadAfter.get()){
+            callBack.onResult(Collections.emptyList())
+            return
+        }
+        ArchTaskExecutor.getIOThreadExecutor().execute{
+            kotlin.run {
+                loadData(id,callBack)
+            }
+        }
+    }
+
 
 }

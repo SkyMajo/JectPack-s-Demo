@@ -3,6 +3,7 @@ package com.skymajo.androidmvvmstydu1.model
 import android.os.Parcelable
 import android.text.TextUtils
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 
 /*
@@ -45,7 +46,7 @@ data class User(
     val favoriteCount:Int,
     val feedCount:Int,
     val hasFollow:Boolean
-): Parcelable {
+):  Serializable, Parcelable  {
     override fun equals(other: Any?): Boolean {
         if(other==null || !(other is User))
             return false

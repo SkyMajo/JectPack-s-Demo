@@ -1,15 +1,20 @@
 package com.skymajo.libnetcache.cache;
 
+import android.util.Log;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class CacheManager {
     public static <T> void save(String key, T body) {
+        Log.e("CacheManager","body:"+body.toString());
         Cache cache = new Cache();
         cache.key = key;
         cache.data = toByteArray(body);
+        Log.e("CacheManager","CacheData:"+ cache.data.length);
         CacheDataBase.get().getCache().save(cache);
 
     }
@@ -46,26 +51,44 @@ public class CacheManager {
         return null;
     }
 
+    private static <T>  byte[] toByteArrays (Object obj) {
+        byte[] bytes = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(obj);
+            oos.flush();
+            bytes = bos.toByteArray ();
+            oos.close();
+            bos.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return bytes;
+    }
 
     private static <T> byte[] toByteArray(T body) {
         ByteArrayOutputStream baos = null;
         ObjectOutputStream oos = null;
-        try{
+        try {
             baos = new ByteArrayOutputStream();
             oos = new ObjectOutputStream(baos);
             oos.writeObject(body);
             oos.flush();
-        }catch (Exception e){
+            return baos.toByteArray();
+        } catch (Exception e) {
+            Log.e("CacheManager","Obj->Byte[]'s Error"+e.fillInStackTrace());
             e.printStackTrace();
+        } finally {
             try {
                 if (baos != null) {
                     baos.close();
                 }
-                if (oos != null){
+                if (oos != null) {
                     oos.close();
                 }
-            }catch (Exception ex){
-                ex.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return new byte[0];

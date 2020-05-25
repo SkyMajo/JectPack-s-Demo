@@ -2,6 +2,7 @@ package com.skymajo.androidmvvmstydu1.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /*
 "topComment": {
@@ -68,7 +69,7 @@ data class Commonent(val id:Int,
                   val author:User,
                   val ugc:Ugc
 
-):Parcelable{
+):Serializable, Parcelable{
     override fun equals(other: Any?): Boolean {
         if(other==null || !(other is Common))
             return false

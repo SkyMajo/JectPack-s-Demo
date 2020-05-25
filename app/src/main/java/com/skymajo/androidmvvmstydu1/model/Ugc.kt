@@ -2,6 +2,7 @@ package com.skymajo.androidmvvmstydu1.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /*
 "ugc": {
@@ -22,7 +23,7 @@ data class Ugc(val likeCount:Int,
                val hasLiked:Boolean,
                val hasdiss:Boolean
 //               val hasDissed:Boolean
-): Parcelable {
+): Serializable, Parcelable{
     override fun equals(other: Any?): Boolean {
         if(other==null || !(other is Ugc))
             return false

@@ -3,6 +3,7 @@ package com.skymajo.androidmvvmstydu1;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
@@ -13,9 +14,11 @@ public abstract class AbsViewModel<T> extends ViewModel {
     private DataSource dataSource;
     private LiveData<PagedList<T>> pagedData;
     private MutableLiveData<Boolean> mutableLiveData = new MutableLiveData<>();
+    protected PagedList.Config config;
+
 
     public AbsViewModel(){
-        PagedList.Config config = new PagedList
+        config = new PagedList
                 .Config.Builder()
                 .setPageSize(10)//一页的内容条数
                 .setInitialLoadSizeHint(12)//一次加载多少条
@@ -30,7 +33,12 @@ public abstract class AbsViewModel<T> extends ViewModel {
                 .setBoundaryCallback(callback)//这个CallBack可以监听到数据加载的状态,有状态之后可以知道，界面是否有数据，已加载数据。
                 .build();
 
-//        pagedData.observeForever();
+//        pagedData.observeForever(new Observer<PagedList<T>>() {
+//            @Override
+//            public void onChanged(PagedList<T> ts) {
+//                    adapter.submitList();
+//            }
+//        });
     }
 
     public LiveData<PagedList<T>> getData(){

@@ -3,6 +3,7 @@ package com.skymajo.libnetcache;
 
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -95,6 +96,7 @@ public abstract class Request<T,R> implements Cloneable {
                 @Override
                 public void run() {
                     ApiResponse<T> response = readCache();
+                    Log.e("Request","response:"+response.success);
                     if (callBack!=null) {
                         callBack.onCacheSuccess(response);
                     }
@@ -127,6 +129,7 @@ public abstract class Request<T,R> implements Cloneable {
     private ApiResponse<T> readCache() {
         String key = TextUtils.isEmpty(cacheKey)?createCacheKey():cacheKey;
         Object cache = CacheManager.getCache(key);
+        Log.e("Request","cache:"+cache);
         ApiResponse<T> response = new ApiResponse<>();
         response.body = (T) cache;
         response.status = 304;

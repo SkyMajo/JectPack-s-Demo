@@ -2,8 +2,10 @@ package com.skymajo.androidmvvmstydu1.model
 
 import android.os.Parcelable
 import android.text.TextUtils
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import org.w3c.dom.Comment
+import java.io.Serializable
 
 /*
                 "id": 428,
@@ -38,7 +40,7 @@ data class Feed(val id:Int,
                 val author:User,
                 val topComment: Commonent,
                 val ugc:Ugc
-):Parcelable{
+): Serializable, Parcelable {
     override fun equals(other: Any?): Boolean {
         if(other ==null || !(other is Feed))
             return false
