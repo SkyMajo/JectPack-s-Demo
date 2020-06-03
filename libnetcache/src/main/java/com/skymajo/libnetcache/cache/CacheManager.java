@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -33,8 +32,7 @@ public class CacheManager {
         try {
             bais = new ByteArrayInputStream(cache);
             ois = new ObjectInputStream(bais);
-            Object o = ois.readObject();
-            return o;
+            return ois.readObject();
         }catch (Exception e){
             e.printStackTrace();
             try{
@@ -51,21 +49,7 @@ public class CacheManager {
         return null;
     }
 
-    private static <T>  byte[] toByteArrays (Object obj) {
-        byte[] bytes = null;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(bos);
-            oos.writeObject(obj);
-            oos.flush();
-            bytes = bos.toByteArray ();
-            oos.close();
-            bos.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return bytes;
-    }
+
 
     private static <T> byte[] toByteArray(T body) {
         ByteArrayOutputStream baos = null;

@@ -52,31 +52,28 @@ import java.io.Serializable
  */
 
 @Parcelize
-data class Commonent(val id:Int,
-                  val itemId:Int,
-                  val commentId:Int,
-                  val userId:Int,
-                  val commentType:Int,
-                  val createTime:String,
-                  val commentCount:Int,
-                  val likeCount:Int,
-                  val commentText:String,
-                  val imageUrl:String,
-                  val videoUrl:String,
-                  val width:Int,
-                  val height:Int,
-                  val hasLiked:Boolean,
-                  val author:User,
-                  val ugc:Ugc
+data class Commonent(val id:String,
+                     val itemId:String,
+                     val commentId:String,
+                     val userId:String,
+                     val commentType:Int,
+                     val createTime:String,
+                     val commentCount:String,
+                     val likeCount:Int,
+                     val commentText:String,
+                     val imageUrl:String,
+                     val videoUrl:String,
+                     val width:Int,
+                     val height:Int,
+                     val hasLiked:Boolean,
+                     val author:User,
+                     val ugc:Ugc
 
 ):Serializable, Parcelable{
     override fun equals(other: Any?): Boolean {
         if(other==null || !(other is Common))
             return false
         var newCommon= other as Common
-        return likeCount==newCommon.likeCount
-                &&hasLiked==newCommon.hasLiked
-                &&(author!=null && author.equals(newCommon.author))
-                &&(ugc!=null && ugc.equals(newCommon.ugc))
+        return likeCount == newCommon.likeCount && hasLiked == newCommon.hasLiked && author!=null && author.equals(newCommon.author) && ugc!=null && ugc.equals(newCommon.ugc)
     }
 }

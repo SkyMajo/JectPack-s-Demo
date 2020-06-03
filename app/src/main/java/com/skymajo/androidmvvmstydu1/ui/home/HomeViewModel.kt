@@ -18,6 +18,7 @@ import com.skymajo.libnetcache.Request
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
+@Suppress("UNCHECKED_CAST")
 class HomeViewModel : AbsViewModel<Feed>() {
 
 
@@ -26,7 +27,7 @@ class HomeViewModel : AbsViewModel<Feed>() {
 
     private val loadAfter = AtomicBoolean(false)
 
-    public var cacheLiveData = MutableLiveData<PagedList<Feed>>()
+    var cacheLiveData = MutableLiveData<PagedList<Feed>>()
 
 
     //DataSource<Key,Value> 数据源:Key对应加载数据对应的条件信息，Value对应数据实体类
@@ -75,7 +76,7 @@ class HomeViewModel : AbsViewModel<Feed>() {
         if (key > 0) {
             loadAfter.set(true)
         }
-        var request = ApiServce.get<Any>("/feeds/queryHotFeedsList")
+        val request = ApiServce.get<Any>("/feeds/queryHotFeedsList")
             .addParam("feedType", null)
             .addParam("userId", 0)
             .addParam("feedId", key)
@@ -90,22 +91,21 @@ class HomeViewModel : AbsViewModel<Feed>() {
                         Log.e("onCacheSuccess","onCacheSuccess:null")
                         withCache = false
                     }else{
-                    var body = response?.body
-                    var dataSource =  MuteableDataSource<Int,Feed>()
+                    val body = response.body
+                    val dataSource =  MuteableDataSource<Int,Feed>()
                     dataSource.data.addAll(body!!)
-                    var buildNewPageList = dataSource.buildNewPageList(config)
+                    val buildNewPageList = dataSource.buildNewPageList(config)
                     cacheLiveData.postValue(buildNewPageList)
                     }
-
                 }
             })
         }
 
         try{
-            var newRequest=if(withCache) { request.clone() } else request
+            val newRequest=if(withCache) { request.clone() } else request
             newRequest.cacheStrategy (if (key==0){Request.NET_CACHE}else{Request.NET_ONLY})
-            var reponse = newRequest.exqueue()
-            var data:List<Feed> = if (reponse.body == null) {
+            val reponse = newRequest.exqueue()
+            val data:List<Feed> = if (reponse.body == null) {
                 Collections.emptyList<Any>()
             }else{
                 reponse.body

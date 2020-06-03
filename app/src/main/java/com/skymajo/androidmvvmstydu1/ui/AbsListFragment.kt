@@ -61,6 +61,7 @@ abstract class AbsListFragment<T, M : AbsViewModel<T>> :Fragment(), OnRefreshLis
         mRecyclerView!!.itemAnimator = null
 
 
+
         afterCreateView()
         return binding!!.root
     }

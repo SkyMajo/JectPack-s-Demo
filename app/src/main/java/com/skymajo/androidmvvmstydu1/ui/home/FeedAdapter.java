@@ -1,6 +1,7 @@
 package com.skymajo.androidmvvmstydu1.ui.home;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.skymajo.androidmvvmstydu1.R;
 import com.skymajo.androidmvvmstydu1.databinding.LayoutFeedTypeImageBinding;
 import com.skymajo.androidmvvmstydu1.databinding.LayoutFeedTypeVideoBinding;
 import com.skymajo.androidmvvmstydu1.model.Feed;
@@ -67,6 +69,12 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.bindData(getItem(position));
+        View topComment = holder.itemView.findViewById(R.id.fl_top_comment);
+        if (getItem(position).getTopComment() == null) {
+            topComment.setVisibility(View.GONE);
+        } else {
+            topComment.setVisibility(View.VISIBLE);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
