@@ -104,7 +104,7 @@ class HomeViewModel : AbsViewModel<Feed>() {
         try{
             val newRequest=if(withCache) { request.clone() } else request
             newRequest.cacheStrategy (if (key==0){Request.NET_CACHE}else{Request.NET_ONLY})
-            val reponse = newRequest.exqueue()
+            val reponse = newRequest.execute()
             val data:List<Feed> = if (reponse.body == null) {
                 Collections.emptyList<Any>()
             }else{

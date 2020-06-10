@@ -24,18 +24,19 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class ApiServce {
 
-    protected static  final OkHttpClient build;
+    public static  final OkHttpClient build;
     protected static String sBaseUrl;
     protected static com.skymajo.libnetcache.Convert sConvert;
 
     static {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-         build = new OkHttpClient.Builder()
+        build = new OkHttpClient.Builder()
                 .readTimeout(5, TimeUnit.SECONDS)
                 .writeTimeout(5, TimeUnit.SECONDS)
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .addInterceptor(interceptor)
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
         TrustManager[] manager = new TrustManager[]{new X509TrustManager() {
             @Override

@@ -8,12 +8,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class CacheManager {
+
     public static <T> void save(String key, T body) {
         Log.e("CacheManager","body:"+body.toString());
         Cache cache = new Cache();
         cache.key = key;
         cache.data = toByteArray(body);
-        Log.e("CacheManager","CacheData:"+ cache.data.length);
+        Log.e("CacheManager","CacheData:"+ cache.data.length+"length"+cache.data.toString());
         CacheDataBase.get().getCache().save(cache);
 
     }

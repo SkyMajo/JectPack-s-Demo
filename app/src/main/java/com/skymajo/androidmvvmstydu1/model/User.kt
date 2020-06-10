@@ -39,7 +39,7 @@ data class User(
     val followCount:Int,
     val followerCount:Int,
     val qqOpenId:String,
-    val expires_time:String,
+    val expires_time:Long,
     val score:Int,
     val historyCount:Int,
     val commentCount:Int,
