@@ -2,6 +2,7 @@ package com.skymajo.androidmvvmstydu1.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
@@ -10,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.skymajo.androidmvvmstydu1.model.User;
 import com.skymajo.libnetcache.cache.Cache;
 import com.skymajo.libnetcache.cache.CacheManager;
+
 
 public class UserManager {
     private static final String KEY_CACHE_USER = "cache_user";
@@ -24,7 +26,7 @@ public class UserManager {
 
     private UserManager(){
         User cache = (User) CacheManager.getCache(KEY_CACHE_USER);
-        if(cache!=null && cache.getExpires_time()<System.currentTimeMillis()){
+        if(cache!=null && cache.getExpires_time()>System.currentTimeMillis()){
             user = cache;
         }
     }
@@ -32,7 +34,10 @@ public class UserManager {
         this.user = user;
         CacheManager.save(KEY_CACHE_USER,user);
         if(mutableLiveData.hasObservers()){
+            Log.e("UserManager.save","postValue");
             mutableLiveData.postValue(user);
+//            mutableLiveData = null;
+            mutableLiveData.postValue(null);
         }
     }
 
@@ -44,6 +49,7 @@ public class UserManager {
     }
 
     public boolean isLogin(){
+        Log.e("UserManager.isLogin",""+(user == null?false:(user.getExpires_time())>System.currentTimeMillis()));
         return user == null?false:(user.getExpires_time())<System.currentTimeMillis();
     }
 
@@ -54,4 +60,7 @@ public class UserManager {
     public long getUserId(){
         return isLogin()?user.getUserId():0;
     }
+
+
+
 }

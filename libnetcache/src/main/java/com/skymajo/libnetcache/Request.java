@@ -67,18 +67,22 @@ public abstract class Request<T, R extends Request> implements Cloneable {
             return (R) this;
         }
         //int string byte char
-//        try {
-//            Field field = value.getClass().getDeclaredField("TYPE");
-//            Class claz = (Class) field.get(null);
-//            if (claz.isPrimitive()) {
+        try {
+            if(value.getClass() == String.class){
                 params.put(key, value);
-//            }
-//        } catch (NoSuchFieldException e) {
-//            Log.e("Request",e.toString());
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
+            }else{
+                Field field = value.getClass().getDeclaredField("TYPE");
+                Class claz = (Class) field.get(null);
+                if (claz.isPrimitive()) {
+                    params.put(key, value);
+                }
+            }
+        } catch (NoSuchFieldException e) {
+            Log.e("Request",e.toString());
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return (R) this;
     }
 

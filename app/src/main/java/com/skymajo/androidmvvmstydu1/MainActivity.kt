@@ -14,12 +14,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.alibaba.fastjson.util.JavaBeanInfo.build
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.skymajo.androidmvvmstydu1.model.Destination
 import com.skymajo.androidmvvmstydu1.model.User
 import com.skymajo.androidmvvmstydu1.ui.login.UserManager.get
 import com.skymajo.androidmvvmstydu1.utils.AppConfig
 import com.skymajo.androidmvvmstydu1.utils.NavGraphBuilder
 import kotlinx.android.synthetic.main.activity_main.*
-
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
 
     lateinit var navController: NavController
@@ -37,18 +37,27 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         var sDestConfig = AppConfig.sDestConfig
-        sDestConfig!!.forEach {
-            var value = it.value
+        var iterator = sDestConfig!!.entries.iterator()
+        while (iterator.hasNext()) {
+            var entry: Map.Entry<String, Destination> = iterator.next()
+            var value = entry.value
             if (value != null && !com.skymajo.androidmvvmstydu1.ui.login.UserManager.get().isLogin && value.id == menuItem.itemId && value.needLogin) {
-                com.skymajo.androidmvvmstydu1.ui.login.UserManager.get().login(this@MainActivity).observe(this,
-                    Observer {
+                var login = com.skymajo.androidmvvmstydu1.ui.login.UserManager.get()
+                    .login(this@MainActivity)
+                login.observe(this,
+                    Observer<User>(){
+                        if(it != null){
+                            Log.e("MainActivity","LiveData接收")
+                            navView.selectedItemId = menuItem.itemId
+                        }
 
-                        Log.e("MAinActivity","走了---")
-                        navView.selectedItemId = menuItem.itemId
+
                     })
-                return false
+
+                    return false
             }
         }
+
 
         navController.navigate(menuItem.itemId)
         return !TextUtils.isEmpty(menuItem.title)
@@ -56,3 +65,4 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
 
 }
+

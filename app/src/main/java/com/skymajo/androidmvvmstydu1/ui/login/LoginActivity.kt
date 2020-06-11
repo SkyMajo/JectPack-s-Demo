@@ -116,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
             .addParam("avatar", avatar)
             .addParam("qqOpenId", openid)
 ////            .addParam("qqOpenId","123")
-            .addParam("expires_time", expiresTime.toBigInteger())
+            .addParam("expires_time", expiresTime.toLong())
 //            .addParam("expires_time",test)
             .execute(object : JsonCallBack<User>() {
                 override fun onSusccess(response: ApiResponse<User>?) {
