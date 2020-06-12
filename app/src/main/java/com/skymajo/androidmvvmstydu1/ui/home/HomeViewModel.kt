@@ -11,6 +11,7 @@ import com.alibaba.fastjson.TypeReference
 import com.skymajo.androidmvvmstydu1.AbsViewModel
 import com.skymajo.androidmvvmstydu1.model.Feed
 import com.skymajo.androidmvvmstydu1.ui.MuteableDataSource
+import com.skymajo.androidmvvmstydu1.ui.login.UserManager
 import com.skymajo.libnetcache.ApiResponse
 import com.skymajo.libnetcache.ApiServce
 import com.skymajo.libnetcache.JsonCallBack
@@ -78,7 +79,7 @@ class HomeViewModel : AbsViewModel<Feed>() {
         }
         val request = ApiServce.get<Any>("/feeds/queryHotFeedsList")
             .addParam("feedType", null)
-            .addParam("userId", 0)
+            .addParam("userId", UserManager.get().userId)
             .addParam("feedId", key)
             .addParam("pageCount", 10)
             .responseType(object : TypeReference<ArrayList<Feed>>() {}.type)

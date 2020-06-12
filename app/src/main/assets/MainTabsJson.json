@@ -16,11 +16,26 @@
     "tintColor": "#ffffff",
     "title": "沙发"
   }, {
-    "size": 24,
+    "size": 40,
     "enable": true,
     "index": 2,
+    "tintColor": "#ff678f",
+    "pageUrl": "main/tabs/publish",
+    "title": ""
+  },
+    {
+      "size": 24,
+      "enable": true,
+      "index": 3,
+      "pageUrl": "main/tabs/find",
+      "title": "发现"
+    },{
+    "size": 24,
+    "enable": true,
+    "index": 4,
     "pageUrl": "nofications/nofications",
     "tintColor": "#ffffff",
     "title": "我的"
   }]
 }
+

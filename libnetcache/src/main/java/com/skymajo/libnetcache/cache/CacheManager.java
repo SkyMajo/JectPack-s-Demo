@@ -1,57 +1,39 @@
 package com.skymajo.libnetcache.cache;
 
-import android.util.Log;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+
 public class CacheManager {
 
-    public static <T> void save(String key, T body) {
-        Log.e("CacheManager","body:"+body.toString());
-        Cache cache = new Cache();
-        cache.key = key;
-        cache.data = toByteArray(body);
-        Log.e("CacheManager","CacheData:"+ cache.data.length+"length"+cache.data.toString());
-        CacheDataBase.get().getCache().save(cache);
-
-    }
-
-    public static Object getCache(String key){
-        Cache cache = CacheDataBase.get().getCache().getCache(key);
-        if(cache != null && cache.data != null){
-            return toObject(cache.data);
-        }
-        return null;
-    }
-
-    private static Object toObject(byte[] cache) {
+    //反序列,把二进制数据转换成java object对象
+    private static Object toObject(byte[] data) {
         ByteArrayInputStream bais = null;
         ObjectInputStream ois = null;
         try {
-            bais = new ByteArrayInputStream(cache);
+            bais = new ByteArrayInputStream(data);
             ois = new ObjectInputStream(bais);
             return ois.readObject();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            try{
-                 if (bais != null) {
+        } finally {
+            try {
+                if (bais != null) {
                     bais.close();
                 }
-                 if (ois != null){
-                     ois.close();
-                 }
-            }catch (Exception e1){
-                e1.printStackTrace();
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (Exception ignore) {
+                ignore.printStackTrace();
             }
         }
         return null;
     }
 
-
-
+    //序列化存储数据需要转换成二进制
     private static <T> byte[] toByteArray(T body) {
         ByteArrayOutputStream baos = null;
         ObjectOutputStream oos = null;
@@ -62,7 +44,6 @@ public class CacheManager {
             oos.flush();
             return baos.toByteArray();
         } catch (Exception e) {
-            Log.e("CacheManager","Obj->Byte[]'s Error"+e.fillInStackTrace());
             e.printStackTrace();
         } finally {
             try {
@@ -77,5 +58,28 @@ public class CacheManager {
             }
         }
         return new byte[0];
+    }
+
+    public static <T> void delete(String key, T body) {
+        Cache cache = new Cache();
+        cache.key = key;
+        cache.data = toByteArray(body);
+        CacheDatabase.get().getCache().delete(cache);
+    }
+
+    public static <T> void save(String key, T body) {
+        Cache cache = new Cache();
+        cache.key = key;
+        cache.data = toByteArray(body);
+
+        CacheDatabase.get().getCache().save(cache);
+    }
+
+    public static Object getCache(String key) {
+        Cache cache = CacheDatabase.get().getCache().getCache(key);
+        if (cache != null && cache.data != null) {
+            return toObject(cache.data);
+        }
+        return null;
     }
 }

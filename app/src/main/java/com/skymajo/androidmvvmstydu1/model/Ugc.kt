@@ -1,6 +1,8 @@
 package com.skymajo.androidmvvmstydu1.model
 
 import android.os.Parcelable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
@@ -16,14 +18,14 @@ import java.io.Serializable
 					}
  */
 @Parcelize
-data class Ugc(val likeCount:Int,
+data class Ugc(var likeCount:Int,
                val shareCount:Int,
                val commentCount:Int,
                val hasFavorite:Boolean,
-               val hasLiked:Boolean,
-               val hasdiss:Boolean
+               @Bindable var hasLiked:Boolean,
+               var hasdiss:Boolean
 //               val hasDissed:Boolean
-): Serializable, Parcelable{
+): BaseObservable(), Serializable, Parcelable{
     override fun equals(other: Any?): Boolean {
         if(other==null || !(other is Ugc))
             return false

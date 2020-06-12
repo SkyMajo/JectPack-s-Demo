@@ -1,8 +1,6 @@
 package com.skymajo.androidmvvmstydu1.utils
 
-import android.text.TextUtils
 import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.JSONObject
 import com.alibaba.fastjson.TypeReference
 import com.google.gson.Gson
 import com.skymajo.androidmvvmstydu1.model.BottomBar
@@ -11,23 +9,19 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.lang.Exception
 
 object AppConfig {
 
     var sDestConfig:HashMap<String,Destination>? = null
     var sBottomBar : BottomBar? = null
 
-    fun getBottomBar():BottomBar{
-
-
-        if (sBottomBar == null){
-            var content = parseFile("MainTabsJson.json")
-//            sBottomBar = JSON.parseObject(content,BottomBar::class.java)
-            sBottomBar = Gson().fromJson(content,BottomBar::class.java)
+    fun getBottomBarConfig(): BottomBar? {
+        if (sBottomBar == null) {
+            val content = parseFile("MainTabsJson.json")
+            sBottomBar =
+                JSON.parseObject(content, BottomBar::class.java)
         }
-
-        return sBottomBar!!
+        return sBottomBar
     }
 
     open fun getDestinationConfig ():HashMap<String,Destination>{

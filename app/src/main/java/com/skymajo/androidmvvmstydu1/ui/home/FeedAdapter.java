@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -86,14 +87,19 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
         }
 
         public void bindData(Feed item) {
+            //这里之所以手动绑定数据的原因是 图片 和视频区域都是需要计算的
+            //而dataBinding的执行默认是延迟一帧的。
+            //当列表上下滑动的时候 ，会明显的看到宽高尺寸不对称的问题
             if (binding instanceof LayoutFeedTypeImageBinding){
                 LayoutFeedTypeImageBinding imageBindingbinding = (LayoutFeedTypeImageBinding)binding;
                 imageBindingbinding.setFeed(item);
                 imageBindingbinding.feedImage.bindData(item.getWidth(),item.getHeight(),16,item.getCover());
+//                imageBindingbinding.setLifecycleOwner((LifecycleOwner) this);
             }else{
                 LayoutFeedTypeVideoBinding videoBinding = (LayoutFeedTypeVideoBinding) binding;
                 videoBinding.setFeed(item);
                 videoBinding.listPlayerView.bindData(category,item.getWidth(),item.getHeight(),item.getCover(),item.getUrl());
+//                videoBinding.setLifecycleOwner((LifecycleOwner) this);
             }
         }
     }
