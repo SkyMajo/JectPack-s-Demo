@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
@@ -84,24 +83,6 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     }
 
 
-    private class FeedObserver implements Observer<Feed> {
-
-        private Feed mFeed;
-
-        @Override
-        public void onChanged(Feed newOne) {
-            if (mFeed.getId() != newOne.getId())
-                return;
-//            mFeed.getAuthor() = newOne.getAuthor();
-//            mFeed.getUgc() = newOne.getUgc();
-//            mFeed.notifyChange();
-        }
-
-        public void setFeed(Feed feed) {
-
-            mFeed = feed;
-        }
-    }
 
 
 
@@ -136,4 +117,28 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
             }
         }
     }
+
+
+    private FeedObserver mFeedObserver;
+
+    private static class FeedObserver implements Observer<Feed> {
+
+        private Feed mFeed;
+
+        @Override
+        public void onChanged(Feed newOne) {
+            if (mFeed.getId() != newOne.getId())
+                return;
+            mFeed.setAuthor(newOne.getAuthor());
+            mFeed.setUgc(newOne.getUgc());
+            mFeed.notifyAll();
+        }
+
+        public void setFeed(Feed feed) {
+
+            mFeed = feed;
+        }
+    }
+
+
 }

@@ -13,6 +13,7 @@
             type="androidx.lifecycle.LifecycleOwner" />
 
         <import type="com.skymajo.androidmvvmstydu1.model.Feed"></import>
+        <import type="android.content.Context"></import>
 
         <import type="com.skymajo.androidmvvmstydu1.utils.StringConvert"></import>
 
