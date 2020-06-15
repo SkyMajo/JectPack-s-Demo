@@ -37,9 +37,9 @@ data class Feed(val id:Int,
                 val height:Int,
                 val url:String,
                 val cover:String,
-                val author:User,
+                var author:User,
                 val topComment: Commonent,
-                val ugc:Ugc
+                var ugc:Ugc
 ): Serializable, Parcelable {
     override fun equals(other: Any?): Boolean {
         if(other ==null || !(other is Feed))

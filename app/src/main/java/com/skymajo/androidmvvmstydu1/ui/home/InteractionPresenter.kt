@@ -1,11 +1,13 @@
 package com.skymajo.androidmvvmstydu1.ui.home
 
+import android.content.Context
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.skymajo.androidmvvmstydu1.model.Feed
 import com.skymajo.androidmvvmstydu1.model.User
+import com.skymajo.libcommon.ShareDialog
 import com.skymajo.androidmvvmstydu1.ui.login.UserManager
 import com.skymajo.androidmvvmstydu1.utils.AppGlobals
 import com.skymajo.libnetcache.ApiResponse
@@ -13,12 +15,14 @@ import com.skymajo.libnetcache.ApiServce
 import com.skymajo.libnetcache.JsonCallBack
 import org.json.JSONObject
 
-class InteractionPresenter {
+object InteractionPresenter {
 
     private var URL_TOGGLE_FEED_LIKE:String = "/ugc/toggleFeedLike"
     private var URL_TOGGLE_FEED_DISSLIKE:String = "/ugc/dissFeed"
+    private var URL_SHARE = "/ugc/increaseShareCount";
 
-    public fun toggleFeedLike(owner: LifecycleOwner,feed: Feed){
+    @JvmStatic
+    fun toggleFeedLike(owner: LifecycleOwner,feed: Feed){
         if(!UserManager.get().isLogin){
             var loginLiveData : LiveData<User> = UserManager.get().login(AppGlobals.getApplication())
             loginLiveData.observe(owner,
@@ -57,7 +61,8 @@ class InteractionPresenter {
             })
     }
 
-    public fun toggleFeedDiss(owner: LifecycleOwner,feed: Feed){
+    @JvmStatic
+    fun toggleFeedDiss(owner: LifecycleOwner,feed: Feed){
         if(!UserManager.get().isLogin){
             var loginLiveData : LiveData<User> = UserManager.get().login(AppGlobals.getApplication())
             loginLiveData.observe(owner,
@@ -93,5 +98,33 @@ class InteractionPresenter {
                 }
             })
     }
+
+    @JvmStatic
+    fun openShare(context: Context,feed: Feed){
+
+        var shareDialog =
+            ShareDialog(context)
+        shareDialog.setShareContent(""""因为啊！
+            |梅花声音好听，打游戏又下饭，香喷喷的！
+            |又温柔又可爱的！简直棒极了！！"""".trimMargin())
+        shareDialog.setShareClickListener {
+
+//            ApiServce.get<com.alibaba.fastjson.JSONObject>(URL_SHARE)
+//                .addParam("itemId",feed.itemId)
+//                .execute(object : JsonCallBack<JSONObject>() {
+//                    override fun onSusccess(response: ApiResponse<JSONObject>) {
+//                        super.onSusccess(response)
+//                        if (response.body != null){
+//                            var count =  response.body.getInt("count")
+//                        }
+//                    }
+//                })
+
+        }
+        shareDialog.show()
+
+    }
+
+
 
 }

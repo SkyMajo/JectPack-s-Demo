@@ -16,7 +16,7 @@
 
         <import type="com.skymajo.androidmvvmstydu1.utils.StringConvert"></import>
 
-        <import type="com.skymajo.androidmvvmstydu1.ui.home.InteractionPresenter"/>
+        <import type="com.skymajo.androidmvvmstydu1.ui.home.InteractionPresenter"></import>
     </data>
 
     <LinearLayout
@@ -33,6 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="@{()->InteractionPresenter.toggleFeedLike(LifecycleOwner,feed)}"
             android:text="@{feed.ugc.likeCount>0?StringConvert.INSTANCE.ConvertFeedUgc(feed.ugc.likeCount):null}"
             android:textColor="@{feed.ugc.hasLiked?@color/color_theme:@color/color_3d3}"
             android:textSize="@dimen/sp_14"
@@ -53,6 +54,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="踩"
+            android:onClick="@{()->InteractionPresenter.toggleFeedDiss(LifecycleOwner,feed)}"
             android:textColor="@{feed.ugc.hasdiss?@color/color_theme:@color/color_3d3}"
             android:textSize="@dimen/sp_14"
             app:backgroundTint="@color/color_white"
@@ -90,6 +92,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="@{()->InteractionPresenter.openShare(((Context)LifecycleOwner),feed)}"
             android:text="@{feed.ugc.shareCount>0?StringConvert.INSTANCE.ConvertFeedUgc(feed.ugc.shareCount):null}"
             android:textColor="@color/color_3d3"
             android:textSize="@dimen/sp_14"

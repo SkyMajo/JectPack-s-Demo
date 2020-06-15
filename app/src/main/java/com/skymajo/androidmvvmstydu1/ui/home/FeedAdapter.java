@@ -9,14 +9,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.skymajo.androidmvvmstydu1.BR;
 import com.skymajo.androidmvvmstydu1.R;
 import com.skymajo.androidmvvmstydu1.databinding.LayoutFeedTypeImageBinding;
 import com.skymajo.androidmvvmstydu1.databinding.LayoutFeedTypeVideoBinding;
 import com.skymajo.androidmvvmstydu1.model.Feed;
+
+import static com.skymajo.androidmvvmstydu1.BR.feed;
 
 public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> {
 
@@ -70,6 +74,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.bindData(getItem(position));
+
         View topComment = holder.itemView.findViewById(R.id.fl_top_comment);
         if (getItem(position).getTopComment() == null) {
             topComment.setVisibility(View.GONE);
@@ -77,6 +82,32 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
             topComment.setVisibility(View.VISIBLE);
         }
     }
+
+
+    private class FeedObserver implements Observer<Feed> {
+
+        private Feed mFeed;
+
+        @Override
+        public void onChanged(Feed newOne) {
+            if (mFeed.getId() != newOne.getId())
+                return;
+//            mFeed.getAuthor() = newOne.getAuthor();
+//            mFeed.getUgc() = newOne.getUgc();
+//            mFeed.notifyChange();
+        }
+
+        public void setFeed(Feed feed) {
+
+            mFeed = feed;
+        }
+    }
+
+
+
+
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding binding;
@@ -90,6 +121,8 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
             //这里之所以手动绑定数据的原因是 图片 和视频区域都是需要计算的
             //而dataBinding的执行默认是延迟一帧的。
             //当列表上下滑动的时候 ，会明显的看到宽高尺寸不对称的问题
+            binding.setVariable(BR.feed, item);
+            binding.setVariable(BR.LifecycleOwner, mContext);
             if (binding instanceof LayoutFeedTypeImageBinding){
                 LayoutFeedTypeImageBinding imageBindingbinding = (LayoutFeedTypeImageBinding)binding;
                 imageBindingbinding.setFeed(item);
