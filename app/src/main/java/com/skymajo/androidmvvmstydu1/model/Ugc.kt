@@ -19,7 +19,7 @@ import java.io.Serializable
  */
 @Parcelize
 data class Ugc(var likeCount:Int,
-               val shareCount:Int,
+               var shareCount:Int,
                val commentCount:Int,
                val hasFavorite:Boolean,
                @Bindable var hasLiked:Boolean,
