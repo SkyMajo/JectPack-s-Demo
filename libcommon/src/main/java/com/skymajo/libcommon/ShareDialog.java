@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,11 +105,16 @@ public class ShareDialog extends AlertDialog {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            ImageView iv = findViewById(R.id.iv_img);
-            TextView title = findViewById(R.id.tv_name);
+            ImageView iv = holder.itemView.findViewById(R.id.iv_img);
+            TextView title = holder.itemView.findViewById(R.id.tv_name);
             final ResolveInfo resolveInfo = resolveInfosList.get(position);
             Drawable drawable = resolveInfo.loadIcon(packageManager);
             CharSequence charSequence = resolveInfo.loadLabel(packageManager);
+//            for (int i = 0; i < resolveInfosList.size(); i++) {
+//                Log.e("ShareDialog","Drawable is null?"+(resolveInfosList.get(i).loadIcon(packageManager) == null)+"");
+//                Log.e("ShareDialog","title is null?"+(resolveInfosList.get(i).loadLabel(packageManager) == null)+"");
+//                Log.e("ShareDialog","-------------------------------------------------------------------");
+//            }
             iv.setImageDrawable(drawable);
             title.setText(charSequence);
             holder.itemView.setOnClickListener(new View.OnClickListener() {

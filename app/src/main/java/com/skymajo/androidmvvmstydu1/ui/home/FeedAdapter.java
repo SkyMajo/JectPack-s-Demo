@@ -2,12 +2,14 @@ package com.skymajo.androidmvvmstydu1.ui.home;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
@@ -73,7 +75,6 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.bindData(getItem(position));
-
         View topComment = holder.itemView.findViewById(R.id.fl_top_comment);
         if (getItem(position).getTopComment() == null) {
             topComment.setVisibility(View.GONE);
@@ -103,7 +104,11 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
             //而dataBinding的执行默认是延迟一帧的。
             //当列表上下滑动的时候 ，会明显的看到宽高尺寸不对称的问题
             binding.setVariable(BR.feed, item);
+            Log.e("FeedAdapter","LifecycleOwner is null?:"+(mContext == null));
             binding.setVariable(BR.LifecycleOwner, mContext);
+            binding.setLifecycleOwner((LifecycleOwner) mContext);
+
+//            Log.e("FeedAdapter","LifecycleOwner is null in XML?"+(; == null))
             if (binding instanceof LayoutFeedTypeImageBinding){
                 LayoutFeedTypeImageBinding imageBindingbinding = (LayoutFeedTypeImageBinding)binding;
                 imageBindingbinding.setFeed(item);

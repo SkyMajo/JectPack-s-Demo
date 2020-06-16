@@ -34,7 +34,7 @@ class HomeFragment : AbsListFragment<Feed, HomeViewModel>() {
         } else {
             arguments!!.getString("feedType")
         }
-        return  FeedAdapter(context,feedType)
+        return  FeedAdapter(activity,feedType)
     }
 
 
