@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,13 +30,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.skymajo.libcommon.RoundFrameLayout;
 import com.skymajo.libcommon.ViewHelper;
 
+import java.util.AbstractSequentialList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShareDialog extends AlertDialog {
+
+
     private ShareAdapter shareAdapter;
     private List<ResolveInfo> resolveInfosList;
     private String sShareContent;
     private View.OnClickListener listener;
+    private CornerFrameLayout layout;
+    List<ResolveInfo> shareitems = new ArrayList<>();
 
     public ShareDialog(@NonNull Context context) {
         super(context);
@@ -47,18 +54,23 @@ public class ShareDialog extends AlertDialog {
         super.onCreate(savedInstanceState);
 
 
-        RoundFrameLayout frameLayout = new RoundFrameLayout(getContext());
-        frameLayout.setViewOutLine(PixUtils.dp2px(20), ViewHelper.RADIUS_TOP);
+        layout = new CornerFrameLayout(getContext());
+        layout.setBackgroundColor(Color.WHITE);
+        layout.setViewOutline(PixUtils.dp2px(20), ViewHelper.RADIUS_TOP);
+
         RecyclerView recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+
         shareAdapter = new ShareAdapter();
         recyclerView.setAdapter(shareAdapter);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = layoutParams.topMargin = layoutParams.rightMargin = layoutParams .bottomMargin;
-        layoutParams.gravity = Gravity.CENTER;
-        frameLayout.addView(recyclerView,layoutParams);
+        int margin = PixUtils.dp2px(20);
 
-        setContentView(frameLayout);
+        layoutParams.leftMargin = layoutParams.topMargin = layoutParams.rightMargin = layoutParams .bottomMargin = margin;
+        layoutParams.gravity = Gravity.CENTER;
+        layout.addView(recyclerView,layoutParams);
+
+        setContentView(layout);
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -81,6 +93,13 @@ public class ShareDialog extends AlertDialog {
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("text/plain");
         resolveInfosList = getContext().getPackageManager().queryIntentActivities(intent, 0);
+        List<ResolveInfo> resolveInfos = getContext().getPackageManager().queryIntentActivities(intent, 0);
+        for (ResolveInfo resolveInfo : resolveInfos) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            if (TextUtils.equals(packageName, "com.tencent.mm") || TextUtils.equals(packageName, "com.tencent.mobileqq")) {
+                shareitems.add(resolveInfo);
+            }
+        }
         shareAdapter.notifyDataSetChanged();
 
     }

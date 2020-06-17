@@ -5,14 +5,14 @@
     "size": 24,
     "enable": true,
     "index": 0,
-    "pageUrl": "dash/dash",
+    "pageUrl": "home/home",
     "title": "首页",
     "tintColor": "#ffffff"
   }, {
     "size": 24,
     "enable": true,
     "index": 1,
-    "pageUrl": "home/home",
+    "pageUrl": "dash/dash",
     "tintColor": "#ffffff",
     "title": "沙发"
   }, {

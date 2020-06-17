@@ -33,7 +33,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
         super(new DiffUtil.ItemCallback<Feed>() {
             @Override
             public boolean areItemsTheSame(@NonNull Feed oldItem, @NonNull Feed newItem) {
-                return oldItem.getId() == newItem.getId();
+                return oldItem.id == newItem.id;
             }
 
             @Override
@@ -51,7 +51,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     @Override
     public int getItemViewType(int position) {
         Feed feed = getItem(position);
-        return feed.getItemType();
+        return feed.itemType;
     }
 
 
@@ -76,7 +76,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.bindData(getItem(position));
         View topComment = holder.itemView.findViewById(R.id.fl_top_comment);
-        if (getItem(position).getTopComment() == null) {
+        if (getItem(position).topComment == null) {
             topComment.setVisibility(View.GONE);
         } else {
             topComment.setVisibility(View.VISIBLE);
@@ -112,12 +112,12 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
             if (binding instanceof LayoutFeedTypeImageBinding){
                 LayoutFeedTypeImageBinding imageBindingbinding = (LayoutFeedTypeImageBinding)binding;
                 imageBindingbinding.setFeed(item);
-                imageBindingbinding.feedImage.bindData(item.getWidth(),item.getHeight(),16,item.getCover());
+                imageBindingbinding.feedImage.bindData(item.width,item.height,16,item.cover);
 //                imageBindingbinding.setLifecycleOwner((LifecycleOwner) this);
             }else{
                 LayoutFeedTypeVideoBinding videoBinding = (LayoutFeedTypeVideoBinding) binding;
                 videoBinding.setFeed(item);
-                videoBinding.listPlayerView.bindData(category,item.getWidth(),item.getHeight(),item.getCover(),item.getUrl());
+                videoBinding.listPlayerView.bindData(category,item.width,item.height,item.cover,item.url);
 //                videoBinding.setLifecycleOwner((LifecycleOwner) this);
             }
         }
@@ -132,10 +132,10 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
 
         @Override
         public void onChanged(Feed newOne) {
-            if (mFeed.getId() != newOne.getId())
+            if (mFeed.id != newOne.id)
                 return;
-            mFeed.setAuthor(newOne.getAuthor());
-            mFeed.setUgc(newOne.getUgc());
+            mFeed.author = (newOne.getAuthor());
+            mFeed.ugc = (newOne.getUgc());
             mFeed.notifyAll();
         }
 

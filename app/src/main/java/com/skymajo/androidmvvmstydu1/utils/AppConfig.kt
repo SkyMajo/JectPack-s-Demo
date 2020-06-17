@@ -12,7 +12,7 @@ import java.io.InputStreamReader
 
 object AppConfig {
 
-    var sDestConfig:HashMap<String,Destination>? = null
+    var sDestConfig:HashMap<String, Destination>? = null
     var sBottomBar : BottomBar? = null
 
     fun getBottomBarConfig(): BottomBar? {

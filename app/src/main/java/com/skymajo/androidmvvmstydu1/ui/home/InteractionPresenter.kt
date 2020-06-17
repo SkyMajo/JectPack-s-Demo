@@ -2,6 +2,7 @@ package com.skymajo.androidmvvmstydu1.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.arch.core.executor.ArchTaskExecutor
@@ -19,7 +20,6 @@ import com.skymajo.libcommon.ShareDialog
 import com.skymajo.libnetcache.ApiResponse
 import com.skymajo.libnetcache.ApiServce
 import com.skymajo.libnetcache.JsonCallBack
-import org.w3c.dom.Comment
 
 object InteractionPresenter {
 
@@ -30,25 +30,15 @@ object InteractionPresenter {
 
     @JvmStatic
     fun toggleFeedLike(owner: LifecycleOwner,feed: Feed){
-        if(!UserManager.get().isLogin){
-            var loginLiveData : LiveData<User> = UserManager.get().login(AppGlobals.getApplication())
-            loginLiveData.observe(owner,
-                object : Observer<User?> {
-                    override fun onChanged(user: User?) {
-                        if (user != null){
-                            toggleFeedLikeInternal(feed)
-                        }
-                        loginLiveData.removeObserver(this)
-                    }
-                })
-            return
+        if (!isLogin(owner, Observer { toggleFeedLikeInternal(feed) })) {
+        } else {
+            toggleFeedLikeInternal(feed)
         }
-        toggleFeedLikeInternal(feed)
     }
 
 
     data class likeData(
-       var data:data
+        var data:data
     )
 
     data class data(
@@ -59,41 +49,29 @@ object InteractionPresenter {
         ApiServce.get<Any>(URL_TOGGLE_FEED_LIKE)
             .addParam("userId",UserManager.get().userId)
             .addParam("itemId",feed.itemId)
-            .execute(object : JsonCallBack<String>() {
-                override fun onSusccess(response: ApiResponse<String>?) {
-                    super.onSusccess(response)
-
-                    if (response!!.body != null) {
-                        var hasLike = Gson().fromJson<likeData>(response.body,likeData::class.java).data.hasLiked
-                        feed.ugc.hasLiked = hasLike
-                        if (hasLike) {
-                            feed.ugc.hasdiss = false
-                            feed.ugc.likeCount = feed.ugc.likeCount+1
-                        }else{
-                            feed.ugc.likeCount = feed.ugc.likeCount-1
-                        }
-                        feed.ugc.notifyChange()
+            .execute(object : JsonCallBack<JSONObject>() {
+                override fun onSusccess(response: ApiResponse<JSONObject>) {
+                    if (response.body != null) {
+                        val hasLiked: Boolean =
+                            response.body.getBoolean("hasLiked")
+                        feed.getUgc().isHasLiked = hasLiked
+                        //                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
+//                                    .postValue(feed);
                     }
+                }
+
+                override fun onError(response: ApiResponse<JSONObject>) {
+//                        showToast(response.message);
                 }
             })
     }
 
     @JvmStatic
     fun toggleFeedDiss(owner: LifecycleOwner,feed: Feed){
-        if(!UserManager.get().isLogin){
-            var loginLiveData : LiveData<User> = UserManager.get().login(AppGlobals.getApplication())
-            loginLiveData.observe(owner,
-                object : Observer<User?> {
-                    override fun onChanged(user: User?) {
-                        if (user != null){
-                            toggleFeedDissInternal(feed)
-                        }
-                        loginLiveData.removeObserver(this)
-                    }
-                })
-            return
+        if (!isLogin(owner, Observer { toggleFeedDissInternal(feed) })) {
+        } else {
+            toggleFeedDissInternal(feed)
         }
-        toggleFeedDissInternal(feed)
     }
 
 
@@ -101,68 +79,58 @@ object InteractionPresenter {
         ApiServce.get<Any>(URL_TOGGLE_FEED_DISSLIKE)
             .addParam("userId",UserManager.get().userId)
             .addParam("itemId",feed.itemId)
-            .execute(object : JsonCallBack<String>() {
-                override fun onSusccess(response: ApiResponse<String>?) {
-                    super.onSusccess(response)
-                    if (response!!.body != null) {
-                        var hasLike = Gson().fromJson<likeData>(response.body,likeData::class.java).data.hasLiked
-                        feed.ugc.hasdiss = hasLike
-                        if (hasLike) {
-                            feed.ugc.hasLiked = false
-                        }
-                        feed.ugc.notifyChange()
+            .execute(object : JsonCallBack<JSONObject>() {
+                override fun onSusccess(response: ApiResponse<JSONObject>) {
+                    if (response.body != null) {
+                        val hasLiked: Boolean =
+                            response.body.getBoolean("hasLiked")
+                        feed.getUgc().isHasdiss = hasLiked
                     }
+                }
+
+                override fun onError(response: ApiResponse<JSONObject>) {
+//                        showToast(response.message);
                 }
             })
     }
 
+    //打开分享面板
     @JvmStatic
-    fun openShare(context: Context?,feed: Feed){
+    fun openShare(context: Context?, feed: Feed) {
         val url = "http://h5.aliyun.ppjoke.com/item/%s?timestamp=%s&user_id=%s"
-        val shareContent = feed.feeds_text
-        Log.e("InteractionPresenter", "LifecycleOwner is null?:" + (context == null))
-        var shareDialog =
-            ShareDialog(context!!)
-//        shareDialog.setShareContent(""""因为啊！
-//            |梅花声音好听，打游戏又下饭，香喷喷的！
-//            |又温柔又可爱的！简直棒极了！！"""".trimMargin())
+        var shareContent = feed.feeds_text
+        if (!TextUtils.isEmpty(feed.url)) {
+            shareContent = feed.url
+        } else if (!TextUtils.isEmpty(feed.cover)) {
+            shareContent = feed.cover
+        }
+        val shareDialog = ShareDialog(context!!)
         shareDialog.setShareContent(shareContent)
         shareDialog.setShareClickListener {
-
-
-            ApiServce.get<Any>(URL_SHARE)
+            ApiServce.get<Any>(InteractionPresenter.URL_SHARE)
                 .addParam("itemId", feed.itemId)
-                .execute(object : JsonCallBack<JSONObject?>() {
-                    fun onSuccess(response: ApiResponse<JSONObject?>) {
+                .execute(object : JsonCallBack<JSONObject>() {
+                    override fun onSusccess(response: ApiResponse<JSONObject>) {
                         if (response.body != null) {
-                            val count = response.body!!.getIntValue("count")
-                            feed.ugc.shareCount = count
+                            val count = response.body.getIntValue("count")
+                            feed.getUgc().setShareCount(count)
                         }
                     }
 
-                    override fun onError(response: ApiResponse<JSONObject?>?) {
-                        super.onError(response)
-                        InteractionPresenter.showToast(response!!.message)
+                    override fun onError(response: ApiResponse<JSONObject>) {
+//                                showToast(response.message);
                     }
                 })
-
         }
         shareDialog.show()
-
     }
 
 
     //给一个帖子的评论点赞/取消点赞
     fun toggleCommentLike(owner: LifecycleOwner?, comment: Commonent) {
-        if (!isLogin(owner,
-                Observer { (id, userId, name, avatar, description, likeCount, topCommentCount, followCount, followerCount, qqOpenId, expires_time, score, historyCount, commentCount, favoriteCount, feedCount, hasFollow) ->
-                    InteractionPresenter.toggleCommentLikeInternal(
-                        comment
-                    )
-                })
-        ) {
+        if (!isLogin(owner, Observer { toggleCommentLikeInternal(comment) })) {
         } else {
-            InteractionPresenter.toggleCommentLikeInternal(comment)
+            toggleCommentLikeInternal(comment)
         }
     }
 
@@ -174,7 +142,7 @@ object InteractionPresenter {
                 fun onSuccess(response: ApiResponse<JSONObject?>) {
                     if (response.body != null) {
                         val hasLiked = response.body!!.getBooleanValue("hasLiked")
-                        comment.ugc.hasLiked = hasLiked
+                        comment.getUgc().hasLiked = hasLiked
                     }
                 }
 
@@ -197,9 +165,9 @@ object InteractionPresenter {
         } else {
             val liveData = UserManager.get().login(AppGlobals.getApplication())
             if (owner == null) {
-                liveData.observeForever(InteractionPresenter.loginObserver(observer, liveData))
+                liveData.observeForever(loginObserver(observer, liveData))
             } else {
-                liveData.observe(owner, InteractionPresenter.loginObserver(observer, liveData))
+                liveData.observe(owner, loginObserver(observer, liveData))
             }
             false
         }
@@ -227,6 +195,7 @@ object InteractionPresenter {
         }
     }
 
-
-
 }
+
+
+

@@ -1,7 +1,6 @@
 package com.skymajo.androidmvvmstydu1
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
