@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.exoplayer2.ui.PlayerControlView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/control_view"
+    app:controller_layout_id="@layout/layout_simple_exo_player_contorller_view"
+    android:layout_gravity="bottom"
+    android:layout_height="wrap_content">
+
+</com.google.android.exoplayer2.ui.PlayerControlView>
