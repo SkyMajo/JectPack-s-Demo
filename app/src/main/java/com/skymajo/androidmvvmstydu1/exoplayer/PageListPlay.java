@@ -3,6 +3,8 @@ package com.skymajo.androidmvvmstydu1.exoplayer;
 import android.app.Application;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -16,9 +18,12 @@ import com.skymajo.androidmvvmstydu1.utils.AppGlobals;
 
 public class PageListPlay {
 
-    private  SimpleExoPlayer exolayer;
-    private  PlayerView player;
-    private  PlayerControlView controlView;
+    public   SimpleExoPlayer exolayer;
+    public   PlayerView player;
+    public   PlayerControlView controlView;
+    private boolean isPlaying;
+    public  String playUrl;
+
 
     public PageListPlay() {
         Application application = AppGlobals.INSTANCE.getApplication();
@@ -30,6 +35,9 @@ public class PageListPlay {
 
         player = (PlayerView) LayoutInflater.from(application).inflate(R.layout.layout_exo_player_view, null, false);
         controlView = (PlayerControlView) LayoutInflater.from(application).inflate(R.layout.layout_exo_player_contorller_view, null, false);
+
+        player.setPlayer(exolayer);
+        controlView.setPlayer(exolayer);
     }
 
     public void release() {
@@ -51,4 +59,5 @@ public class PageListPlay {
         }
 
     }
+
 }

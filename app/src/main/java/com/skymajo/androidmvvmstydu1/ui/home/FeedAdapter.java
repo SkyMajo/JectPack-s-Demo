@@ -20,6 +20,7 @@ import com.skymajo.androidmvvmstydu1.R;
 import com.skymajo.androidmvvmstydu1.databinding.LayoutFeedTypeImageBinding;
 import com.skymajo.androidmvvmstydu1.databinding.LayoutFeedTypeVideoBinding;
 import com.skymajo.androidmvvmstydu1.model.Feed;
+import com.skymajo.androidmvvmstydu1.ui.view.ListPlayerView;
 
 import static com.skymajo.androidmvvmstydu1.BR.feed;
 
@@ -28,6 +29,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     private  LayoutInflater inflate = null;
     private String category;
     private Context mContext;
+    private ListPlayerView listPlayerView;
 
     protected FeedAdapter(Context context, String category) {
         super(new DiffUtil.ItemCallback<Feed>() {
@@ -119,8 +121,17 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
                 videoBinding.setFeed(item);
                 videoBinding.listPlayerView.bindData(category,item.width,item.height,item.cover,item.url);
 //                videoBinding.setLifecycleOwner((LifecycleOwner) this);
+                listPlayerView = videoBinding.listPlayerView;
             }
+
         }
+        public boolean isVideoItem(){
+            return binding instanceof LayoutFeedTypeVideoBinding;
+        }
+        public ListPlayerView getListPlayerView(){
+            return listPlayerView;
+        }
+
     }
 
 

@@ -8,6 +8,7 @@ import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.skymajo.androidmvvmstydu1.AbsListFragment
+import com.skymajo.androidmvvmstydu1.exoplayer.PageListPlayDetector
 import com.skymajo.androidmvvmstydu1.model.Feed
 import com.skymajo.androidmvvmstydu1.ui.MuteableDataSource
 import com.skymajo.libnavannotation.FragmentDestination
@@ -16,7 +17,7 @@ import com.skymajo.libnavannotation.FragmentDestination
 @FragmentDestination("home/home",false,true)
 class HomeFragment : AbsListFragment<Feed, HomeViewModel>() {
 
-
+    lateinit var pageListPlayDetector:PageListPlayDetector
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,7 +26,9 @@ class HomeFragment : AbsListFragment<Feed, HomeViewModel>() {
             Observer<PagedList<Feed>> {
                 adapter.submitList(it)
             })
-        super.onViewCreated(view, savedInstanceState)
+
+        pageListPlayDetector = PageListPlayDetector(this, mRecyclerView)
+
     }
 
     override fun getAdapter(): PagedListAdapter<*,*> {
@@ -34,7 +37,19 @@ class HomeFragment : AbsListFragment<Feed, HomeViewModel>() {
         } else {
             arguments!!.getString("feedType")
         }
-        return  FeedAdapter(activity,feedType)
+
+        return  object : FeedAdapter(context, feedType) {
+            override fun onViewAttachedToWindow(holder: ViewHolder) {
+                super.onViewAttachedToWindow(holder)
+                if (holder.isVideoItem) {
+                    pageListPlayDetector.addTarget(holder.listPlayerView)
+                }
+            }
+
+            override fun onViewDetachedFromWindow(holder: ViewHolder) {
+                pageListPlayDetector.removeTarget(holder.listPlayerView)
+            }
+        }
     }
 
 
@@ -58,7 +73,13 @@ class HomeFragment : AbsListFragment<Feed, HomeViewModel>() {
         })
     }
 
+    override fun onPause() {
+        pageListPlayDetector.onPause()
+        super.onPause()
+    }
 
-
-
+    override fun onResume() {
+        pageListPlayDetector.onResume()
+        super.onResume()
+    }
 }
