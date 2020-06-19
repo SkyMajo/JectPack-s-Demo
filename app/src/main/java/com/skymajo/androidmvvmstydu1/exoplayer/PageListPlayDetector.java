@@ -89,7 +89,7 @@ public class PageListPlayDetector {
         }
 
         //判断上一个playTarget是否还满足条件，如果还满足条件就没必要创造新的playTarget了
-        if (mPlayingTarget != null && mPlayingTarget.isPlaying() && !isTargetInBounds(mPlayingTarget)) {
+        if (mPlayingTarget != null && mPlayingTarget.isPlaying() && isTargetInBounds(mPlayingTarget)) {
             return;
         }
 
@@ -125,7 +125,7 @@ public class PageListPlayDetector {
         //获取RecyclerView的中心位置
         ensureRecyclerViewLocation();
         //如果这个容器没显示，或者不在windows上
-        if (owner.isShown() || !owner.isAttachedToWindow()){
+        if (!owner.isShown() || !owner.isAttachedToWindow()){
             return false;
         }
         //否则就应该计算这个owner在屏幕上所处的位置
